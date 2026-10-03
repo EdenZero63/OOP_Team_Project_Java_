@@ -1,0 +1,21 @@
+# Compiled output
+*.class
+out/
+bin/
+build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (keep folder)
+data/*
+!data/.gitkeep
