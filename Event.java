@@ -35,6 +35,6 @@ public class Event {
 
     @Override
     public String toString() {
-        return eventName + " - " + date + " - " + location;
+        return eventName +  -  + date +  -  + location;
     }
 }
