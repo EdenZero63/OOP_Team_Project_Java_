@@ -16,9 +16,9 @@ public class StudentManager {
         }
 
         for (int i = 0; i < students.size(); i++) {
-            Student s = students.get(i);
-            if (s.getStudentId().equalsIgnoreCase(studentId.trim())) {
-                return s;
+            Student currentStudent = students.get(i);
+            if (currentStudent.getStudentId().equalsIgnoreCase(studentId.trim())) {
+                return currentStudent;
             }
         }
         return null;
@@ -41,9 +41,9 @@ public class StudentManager {
     }
 
     public void displayStudentById(String studentId) {
-        Student s = findStudentById(studentId);
-        if (s != null) {
-            s.displayStudent();
+        Student currentStudent = findStudentById(studentId);
+        if (currentStudent != null) {
+            currentStudent.displayStudent();
         } else {
             System.out.println("Record not found for student ID: " + studentId);
         }
@@ -56,10 +56,11 @@ public class StudentManager {
         }
 
         System.out.println("========================================");
-        System.out.println("           STUDENT DIRECTORY            ");
+        System.out.println("     STUDENT INFORMATION DIRECTORY      ");
         System.out.println("========================================");
         for (int i = 0; i < students.size(); i++) {
-            students.get(i).displayStudent();
+            Student currentStudent = students.get(i);
+            currentStudent.displayStudent();
             System.out.println("----------------------------------------");
         }
     }
