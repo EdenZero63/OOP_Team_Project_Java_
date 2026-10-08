@@ -12,13 +12,13 @@ import model.Organizer;
 public class OrganizerManager{
     private ArrayList<Organizer> organizers;
 
-    public OrganizerManager() {
+    public OrganizerManager(){
         this.organizers = new ArrayList<Organizer>();
     }
 
     //find by ID, returns null if missing
     public Organizer findOrganizerById(String organizerId){
-        if(organizerId == null) {
+        if(organizerId == null){
             return null;
         }
 
@@ -47,7 +47,7 @@ public class OrganizerManager{
 
     //add and remove
     public void addOrganizer(Organizer organizer) throws DuplicateIdException{
-        if(organizer == null) {
+        if(organizer == null){
             throw new IllegalArgumentException("Organizer cannot be null.");
         }
         if(organizerExists(organizer.getOrganizerId())){
@@ -66,14 +66,14 @@ public class OrganizerManager{
 
     //event links
     public void assignEvent(String organizerId, Event event) throws NotFoundException{
-        if(event == null) {
+        if(event == null){
             throw new IllegalArgumentException("Event cannot be null.");
         }
         getOrganizer(organizerId).addManagedEvent(event);
     }
 
     public void unassignEvent(String organizerId, Event event) throws NotFoundException{
-        if(event == null) {
+        if(event == null){
             throw new IllegalArgumentException("Event cannot be null.");
         }
         getOrganizer(organizerId).removeManagedEvent(event);
@@ -84,13 +84,13 @@ public class OrganizerManager{
     }
 
     //find which organizer manages an event
-    public Organizer findOrganizerOfEvent(Event event) {
-        if(event == null) {
+    public Organizer findOrganizerOfEvent(Event event){
+        if(event == null){
             return null;
         }
-        for(int i = 0; i < organizers.size(); i++) {
+        for(int i = 0; i < organizers.size(); i++){
             Organizer current = organizers.get(i);
-            if (current.manages(event)) {
+            if(current.manages(event)){
                 return current;
             }
         }
@@ -103,7 +103,7 @@ public class OrganizerManager{
     }
 
     public void displayAllOrganizers(){
-        if(organizers.isEmpty()) {
+        if(organizers.isEmpty()){
             System.out.println("No organizers on file.");
             return;
         }
