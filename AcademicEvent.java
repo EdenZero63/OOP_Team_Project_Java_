@@ -1,14 +1,25 @@
 package model;
 
 public class AcademicEvent extends Event {
+    private String subject;
 
-    public AcademicEvent(String eventName, String date, String location,
-                         int maxAttendees, int attendees) {
-        super(eventName, date, location, maxAttendees, attendees);
+    public AcademicEvent(int eventID, String eventName, String date, String time,
+                         String location, int maxCapacity, int attendees,
+                         String subject) {
+        super(eventID, eventName, date, time, location, maxCapacity, attendees);
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     @Override
     public String toString() {
-        return "Academic Event: " + super.toString();
+        return super.toString() + " - Subject: " + subject;
     }
 }
