@@ -4,8 +4,8 @@ package model;
 public class CareerEvent extends Event{
     private String companyName;
 
-    public CareerEvent(String eventId, String eventName, String date, String time, String location, int capacity, String companyName){
-        super(eventId, eventName, date, time, location, capacity);
+    public CareerEvent(String eventId, String eventName, String description, String date, String time, String location, int capacity, String companyName){
+        super(eventId, eventName, description, date, time, location, capacity);
         this.companyName = companyName;
     }
 
@@ -28,3 +28,4 @@ public class CareerEvent extends Event{
         return super.toString() + " - Company: " + companyName;
     }
 }
+
