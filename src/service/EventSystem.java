@@ -5,12 +5,13 @@ public class EventSystem{
     private StudentManager studentManager;
     private OrganizerManager organizerManager;
     private EventManager eventManager;
-    //RegistrationManager goes here once its constructor is final
+    private RegistrationManager registrationManager;
 
     public EventSystem(){
         this.studentManager = new StudentManager();
         this.organizerManager = new OrganizerManager();
         this.eventManager = new EventManager();
+        this.registrationManager = new RegistrationManager();
     }
 
     //getters
@@ -24,5 +25,9 @@ public class EventSystem{
 
     public EventManager getEventManager(){
         return eventManager;
+    }
+
+    public RegistrationManager getRegistrationManager(){
+        return registrationManager;
     }
 }
