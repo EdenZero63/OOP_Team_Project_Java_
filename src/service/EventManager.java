@@ -6,23 +6,25 @@ import exception.DuplicateIdException;
 import exception.NotFoundException;
 import model.Event;
 
-//handles events: add, find, search, display
-//errors are thrown so Menu can print them
+// Handles events: add, find, search, display
+// Errors are thrown so Menu can print them
 public class EventManager{
     private ArrayList<Event> events;
 
-    public EventManager(){
+    public EventManager()
+    {
         this.events = new ArrayList<Event>();
     }
 
-    //find by ID, returns null if missing
-    public Event findEventById(String eventId){
-        if(eventId == null){
+    // Find by ID, returns null if missing
+    public Event findEventById (String eventId)
+    {
+        if (eventId == null) {
             return null;
         }
 
         String wanted = eventId.trim();
-        for(int i = 0; i < events.size(); i++){
+        for (int i = 0; i < events.size(); i++) {
             Event current = events.get(i);
             if(current.getEventId().equalsIgnoreCase(wanted)){
                 return current;
@@ -31,38 +33,43 @@ public class EventManager{
         return null;
     }
 
-    //same as find but throws if missing
-    public Event getEvent(String eventId) throws NotFoundException{
+    // Same as find but throws if missing
+    public Event getEvent (String eventId) throws NotFoundException
+    {
         Event event = findEventById(eventId);
-        if(event == null){
+        if (event == null) {
             throw new NotFoundException("No event with ID '" + eventId + "'.");
         }
         return event;
     }
 
-    public boolean eventExists(String eventId){
+    public boolean eventExists(String eventId)
+    {
         return findEventById(eventId) != null;
     }
 
-    //add and remove
-    public void addEvent(Event event) throws DuplicateIdException{
-        if(event == null){
+    // Add and remove
+    public void addEvent(Event event) throws DuplicateIdException
+    {
+        if (event == null) {
             throw new IllegalArgumentException("Event cannot be null.");
         }
-        if(eventExists(event.getEventId())){
+        if (eventExists(event.getEventId())) {
             throw new DuplicateIdException("Event ID '" + event.getEventId() + "' already exists.");
         }
         events.add(event);
     }
 
-    public Event removeEvent(String eventId) throws NotFoundException{
+    public Event removeEvent(String eventId) throws NotFoundException
+    {
         Event event = getEvent(eventId);
         events.remove(event);
         return event;
     }
 
-    //search by part of the name, ignores case
-    public ArrayList<Event> searchEventsByName(String keyword){
+    // Search by part of the name, ignores case
+    public ArrayList<Event> searchEventsByName(String keyword)
+    {
         ArrayList<Event> matches = new ArrayList<Event>();
         if(keyword == null || keyword.trim().isEmpty()){
             return matches;
@@ -79,12 +86,14 @@ public class EventManager{
     }
 
     //display
-    public void displayEventById(String eventId) throws NotFoundException{
+    public void displayEventById(String eventId) throws NotFoundException
+    {
         getEvent(eventId).displayEvent();
     }
 
-    public void displayAllEvents(){
-        if(events.isEmpty()){
+    public void displayAllEvents()
+    {
+        if (events.isEmpty()) {
             System.out.println("No events on file.");
             return;
         }
@@ -92,18 +101,20 @@ public class EventManager{
         System.out.println("========================================");
         System.out.println("             EVENT DIRECTORY            ");
         System.out.println("========================================");
-        for(int i = 0; i < events.size(); i++){
+        for (int i = 0; i < events.size(); i++) {
             events.get(i).displayEvent();
             System.out.println("----------------------------------------");
         }
     }
 
-    public int getEventCount(){
+    public int getEventCount()
+    {
         return events.size();
     }
 
-    //live list for FileManager and reports
-    public ArrayList<Event> getAllEvents(){
+    // Live list for FileManager and reports
+    public ArrayList<Event> getAllEvents()
+    {
         return events;
     }
 }
