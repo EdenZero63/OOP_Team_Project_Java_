@@ -4,8 +4,8 @@ package model;
 public class ClubEvent extends Event{
     private String clubName;
 
-    public ClubEvent(String eventId, String eventName, String date, String time, String location, int capacity, String clubName){
-        super(eventId, eventName, date, time, location, capacity);
+    public ClubEvent(String eventId, String eventName, String description, String date, String time, String location, int capacity, String clubName){
+        super(eventId, eventName, description, date, time, location, capacity);
         this.clubName = clubName;
     }
 
