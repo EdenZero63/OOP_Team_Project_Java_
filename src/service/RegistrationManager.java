@@ -7,23 +7,24 @@ import exception.NotFoundException;
 
 /* ---- WORK IN PROGRESS ---- */
 
-
 public class RegistrationManager {
 
-      private ArrayList<Registration> registrations;      // Is this supposed to be a list of all registrations for all events? That would be the maximally bad implementation for searches. Use a 2D array for each event and then each student registered.
-      private StudentManager studentManager;
+    private ArrayList<Registration> registrations;      // Is this supposed to be a list of all registrations for all events? That would be the maximally bad implementation for searches. Use a 2D array for each event and then each student registered.
+    private StudentManager studentManager;
 
-      public RegistrationManager(StudentManager studentManager){
+    public RegistrationManager(StudentManager studentManager)
+    {
         this.studentManager = studentManager;
         registraions = new ArrayList<>();
-      }
+    }
 
-      /*IP -- still need to check event -- currently only checks if student exsists! */
-      public void registerStudent(String studentId, String eventId, String registrationDate)
+    /*IP -- still need to check event -- currently only checks if student exsists! */
+    public void registerStudent(String studentId, String eventId, String registrationDate)
+    {
         throws NotFoundException {
-          Student student = studentManager.findStudentById(studentId);
+            Student student = studentManager.findStudentById(studentId);
 
-          if (student == null) {
+        if (student == null) {
             throw new NotFoundException("Student not found.");
         }
 
@@ -37,5 +38,5 @@ public class RegistrationManager {
           Check capacity 
           Add registraions
         */
-      } 
+    } 
 }
