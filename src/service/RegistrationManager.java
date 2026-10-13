@@ -18,7 +18,7 @@ public class RegistrationManager {
       public RegistrationManager(StudentManager studentManager, EventManager eventManager){
         this.studentManager = studentManager;
         this.eventManager = eventManager;
-        registraions = new ArrayList<>();
+        this.registraions = new ArrayList<>();
       }
 
       /*IP -- still need to check event -- currently only checks if student exsists! */
@@ -35,8 +35,8 @@ public class RegistrationManager {
             }
 
               // code to search for if the student has registered for that event.
-              for (int i = 0; i < registrations.size(); i++) {
-                    if ((student == registrations.get(i).getStudent())&&(event == registrations.get(i).getEvent())) {
+              for (int i = 0; i < this.registrations.size(); i++) {
+                    if ((student == this.registrations.get(i).getStudent())&&(event == this.registrations.get(i).getEvent())) {
                           throw new NotFoundException("Student already registered for Event.");
                     }
               }
@@ -45,7 +45,7 @@ public class RegistrationManager {
               // IP -- code to generate or input value for registrationId.
               String registrationId = "";
               
-              registrations.add(new Registration(registrationId, student, event, registrationDate));
+              this.registrations.add(new Registration(registrationId, student, event, registrationDate));
         }
 
       public void cancelRegistration(String studentId, String eventId)
@@ -61,9 +61,9 @@ public class RegistrationManager {
             }
 
               // code to delete registration
-              for (int i = 0; i < registrations.size(); i++) {
-                    if ((student == registrations.get(i).getStudent())&&(event == registrations.get(i).getEvent())) {
-                          registrations.remove(i);
+              for (int i = 0; i < this.registrations.size(); i++) {
+                    if ((student == this.registrations.get(i).getStudent())&&(event == this.registrations.get(i).getEvent())) {
+                          this.registrations.remove(i);
                           return;
                     }
               }
