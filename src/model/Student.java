@@ -6,30 +6,36 @@ public class Student {
     private String email;
     private String major;
 
-    public Student(String studentId, String name, String email, String major) {
+    public Student(String studentId, String name, String email, String major)
+    {
         this.studentId = studentId;
         this.name = name;
         this.email = email;
         this.major = major;
     }
 
-    public String getStudentId() {
+    public String getStudentId()
+    {
         return studentId;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public String getMajor() {
+    public String getMajor()
+    {
         return major;
     }
 
-    public void displayStudent() {
+    public void displayStudent()
+    {
         System.out.println("Student ID : " + studentId);
         System.out.println("Name       : " + name);
         System.out.println("Email      : " + email);
