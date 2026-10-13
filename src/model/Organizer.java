@@ -2,21 +2,22 @@ package model;
 
 import java.util.ArrayList;
 
-//organizer that creates and manages events, keeps its own list of events
+// Organizer that creates and manages events, keeps its own list of events
 public class Organizer{
-    //fields
+    // Fields
     private String organizerId;
     private String name;
     private String email;
     private String department;
     private ArrayList<Event> managedEvents;
 
-    //constructor
-    public Organizer(String organizerId, String name, String email, String department){
-        if(organizerId == null || organizerId.trim().isEmpty()){
+    // Constructor
+    public Organizer(String organizerId, String name, String email, String department)
+    {
+        if (organizerId == null || organizerId.trim().isEmpty()) {
             throw new IllegalArgumentException("An organizer needs an ID.");
         }
-        if(name == null || name.trim().isEmpty()){
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("An organizer needs a name.");
         }
 
@@ -27,60 +28,72 @@ public class Organizer{
         this.managedEvents = new ArrayList<Event>();
     }
 
-    //getters
-    public String getOrganizerId(){
+    // Getters
+    public String getOrganizerId()
+    {
         return organizerId;
     }
 
-    public String getName(){
+    public String getName()
+    {
         return name;
     }
 
-    public String getEmail(){
+    public String getEmail()
+    {
         return email;
     }
 
-    public String getDepartment(){
+    public String getDepartment()
+    {
         return department;
     }
 
-    //setters
-    public void setEmail(String email){
+    // Setters
+    public void setEmail(String email)
+    {
         this.email = email == null ? "" : email.trim();
     }
 
-    public void setDepartment(String department){
+    public void setDepartment(String department)
+    {
         this.department = department == null ? "" : department.trim();
     }
 
-    //link an event, skips null or already linked
-    public void addManagedEvent(Event event){
-        if(event == null || managedEvents.contains(event)){
+    // Link an event, skips null or already linked
+    public void addManagedEvent(Event event)
+    {
+        if (event == null || managedEvents.contains(event)) {
             return;
         }
         managedEvents.add(event);
     }
 
-    //unlink an event
-    public boolean removeManagedEvent(Event event){
+    // Unlink an event
+    public boolean removeManagedEvent(Event event)
+    {
         return managedEvents.remove(event);
     }
 
-    public boolean manages(Event event){
+    public boolean manages(Event event)
+    {
         return managedEvents.contains(event);
     }
 
-    public int getManagedEventCount(){
+    public int getManagedEventCount()
+    {
         return managedEvents.size();
     }
 
-    //return a copy so outside code cant change the list
-    public ArrayList<Event> getManagedEvents(){
+    // Return a copy so outside code cant change the list
+    public ArrayList<Event> getManagedEvents()
+    {
         return new ArrayList<Event>(managedEvents);
     }
 
-    //display
-    public void displayOrganizer(){
+    // Display
+    public void displayOrganizer()
+    {
         System.out.println("Organizer ID : " + organizerId);
         System.out.println("Name         : " + name);
         System.out.println("Email        : " + email);
@@ -89,7 +102,8 @@ public class Organizer{
     }
 
     @Override
-    public String toString(){
+    public String toString()
+    {
         return organizerId + " - " + name + " (" + department + ")";
     }
 }
