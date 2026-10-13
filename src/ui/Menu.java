@@ -170,8 +170,6 @@ public class Menu{
         String eventLocation ="";
         int capacity = 0;
         do{
-            System.out.println("EVENT CREATE MENU");
-
         System.out.println("What Type of Event is being created?");
         System.out.println("1.Academic Event");
         System.out.println("2.Club Event");
@@ -181,6 +179,8 @@ public class Menu{
         
 
          
+                    
+           
 
                  
             switch(eventType)
@@ -281,24 +281,44 @@ public class Menu{
                  flagEvent = false;
                  
             }
-        }while(flagEvent != false);
+        }
 
-      
+        System.out.println("Event created!");
+        event.displayEvent();
     }
 
-    public void viewEventsMenu()
-    {
-       eventMang.displayAllEvents();
+    public void viewEventsMenu(){
+        System.out.print("Enter event ID (or press Enter to see all): ");
+        String eventID = input.nextLine().trim();
+        if(eventID.isEmpty()){
+            eventMang.displayAllEvents();
+            return;
+        }
+
+        try{
+            eventMang.displayEventById(eventID);
+        }catch(NotFoundException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void serachEventsMenu()
-    {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the ID for an event: ");
-        int eventID = input.nextInt();
+    //search by part of name
+    public void searchEventsMenu(){
+        System.out.print("Enter part of the event name: ");
+        String keyword = input.nextLine();
+        ArrayList<Event> results = eventMang.searchEventsByName(keyword);
+        if(results.isEmpty()){
+            System.out.println("No events found.");
+            return;
+        }
 
-        System.out.println("DUMMY TEXT: INFO OF CHOSEN EVENT");
+        System.out.println(results.size() + " event(s) found:");
+        for(int i = 0; i < results.size(); i++){
+            System.out.println("----------------------------------------");
+            results.get(i).displayEvent();
+        }
     }
+
 
     public void  registerForEventsMenu()
     {
@@ -427,36 +447,42 @@ public class Menu{
     }while(flag!= true);
     }
 
-    public void  systemsReportMenu()
-    {
-        boolean flag = false;
-        Scanner input = new Scanner(System.in);
-        System.out.println("REPORTS MENU");
-        System.out.println("1. View Students Report");
-        System.out.println("2. View Events Report");
-        System.out.println("3. View Organizers Report");
-        do{
-        char choice =  input.next().charAt(0);
+    //reports submenu
+    public void systemsReportMenu(){
+        ReportGenerator reports = new ReportGenerator();
+        ArrayList<Event> events = eventMang.getAllEvents();
+        ArrayList<Registration> registrations = regManager.getAllRegistrations();
 
-        switch(choice)
-        {
-            case'1':
-                    System.out.println("STUDENTS REPORT");
-                    flag =true;
-                    break;
-            case'2':
-                    System.out.println("EVENTS REPORT");
-                    flag = true;
-                    break;
-            case'3':
-                    System.out.println("ORGANIZER REPORT");
-                    flag = true;
-                    break;
+        System.out.println("SYSTEM REPORTS");
+        System.out.println("1. Students registered per event");
+        System.out.println("2. Events with available capacity");
+        System.out.println("3. Full events");
+        System.out.println("4. Events by organizer");
+        System.out.print("Choose a report: ");
+        String choice = input.nextLine().trim();
+
+        switch(choice){
+            case "1":
+                reports.displayRegistrationCounts(events, registrations);
+                break;
+            case "2":
+                reports.displayEventsWithSpace(events, registrations);
+                break;
+            case "3":
+                reports.displayFullEvents(events, registrations);
+                break;
+            case "4":
+                System.out.print("Enter organizer ID: ");
+                String orgID = input.nextLine().trim();
+                try{
+                    reports.displayEventsByOrganizer(orgManager.getOrganizer(orgID));
+                }catch(NotFoundException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
             default:
-                    System.out.println("Incorrect input please enter proper value");
-                    
+                System.out.println("Invalid report choice.");
         }
-        }while(flag != true);
-    
     }
 }
+
