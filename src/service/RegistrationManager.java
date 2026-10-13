@@ -75,6 +75,19 @@ public class RegistrationManager {
                   
       }
 
+      public void cancelRegistration(String registrationId)
+            throws NotFoundException {
+              // code to delete registration
+              for (int i = 0; i < this.registrations.size(); i++) {
+                    if (registrationId.equals(this.registrations.get(i).getRegistrationId())) {
+                          this.registrations.remove(i);
+                          return;
+                    }
+              }
+                  throw new NotFoundException("Registration not found.");
+                  
+      }
+
         /*  NEED: 
           -EventManager.java  
           -EventSystem.java
