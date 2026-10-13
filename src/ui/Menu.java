@@ -191,7 +191,7 @@ public class Menu {
         System.out.println("Are you [STUDENT NAME]?(Y/N)");
         char confirm = input.next().charAt(0);
         do{
-        if(confirm == 'Y' || confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
         {
             System.out.println("Enter the ID for the Event you'd like to register for");
             String eventID = input.nextLine();
@@ -199,7 +199,7 @@ public class Menu {
         }
         System.out.println("Do you wish to exit menu?(Y/N)");
         confirm = input.next().charAt(0);
-        if(confirm == 'Y'|| confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
             {
                 
                 flag =true;
@@ -219,7 +219,7 @@ public class Menu {
         System.out.println("Are you [STUDENT NAME]?(Y/N)");
         char confirm = input.next().charAt(0);
         do{
-        if(confirm == 'Y' || confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
         {
             System.out.println("LIST EVENTS REGISTERED FOR");
             System.out.println("Enter name of Event you'd like to cancel: ");
@@ -231,7 +231,7 @@ public class Menu {
         System.out.println("Do you wish to exit menu?(Y/N)");
 
         confirm = input.next().charAt(0);
-         if(confirm == 'Y'|| confirm == 'y')
+         if(Character.toUpperCase(confirm) == 'Y')
         {
                 flag = true;
         }
@@ -251,7 +251,7 @@ public class Menu {
         System.out.println("Are you looking for [Event Name]?(Y/N)");
         char confirm = input.next().charAt(0);
         do{
-        if(confirm == 'Y' || confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
         {
             System.out.println("LIST EVENT ATTENDES");
             
@@ -260,7 +260,7 @@ public class Menu {
         System.out.println("Do you wish to exit menu?(Y/N)");
 
         confirm = input.next().charAt(0);
-        if(confirm == 'Y'|| confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
         {
              flag = true;   
         }
@@ -279,7 +279,7 @@ public class Menu {
         System.out.println("Are you [Organizer Name]?(Y/N)");
         char confirm = input.next().charAt(0);
         do{
-        if(confirm == 'Y' || confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
         {
             System.out.println("LIST EVENTS Organizing");
         }
@@ -287,7 +287,7 @@ public class Menu {
         System.out.println("Do you wish to exit menu?(Y/N)");
 
         confirm = input.next().charAt(0);
-        if(confirm == 'Y'|| confirm == 'y')
+        if(Character.toUpperCase(confirm) == 'Y')
         {
              flag = true;   
         }
