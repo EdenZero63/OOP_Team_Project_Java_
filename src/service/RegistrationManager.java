@@ -22,7 +22,7 @@ public class EventRegistrationManager {
 
       public void registerStudent(String registrationID, Student student, String registrationDate) 
         throws NotFoundException, EventFullException {
-              if (numRegistration > this.event.getCapacity()) { throw new EventFullException(this.event.getName() + " is full"); }
+              if (numRegistration > this.event.getCapacity()) { throw new EventFullException(this.event.getEventName() + " is full."); }
               for (int i = 0; i < this.registrations.size(); i++) {
                     if (student == this.registrations.get(i).getStudent()) {
                           throw new NotFoundException("Student already registered for Event.");
