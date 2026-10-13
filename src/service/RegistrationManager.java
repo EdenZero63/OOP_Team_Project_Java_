@@ -16,14 +16,28 @@ public class EventRegistrationManager {
             registraions = new ArrayList<>();
       }
 
-      public void registerStudent(String registrationID, Student student) {}
+      public void registerStudent(String registrationID, Student student) {
+            Registration registration = new Registration(registrationID, student, this.event);
+      }
+
+      public void cancleRegistration(Student student)
+        throws NotFoundException {}
+
+      public boolean getEventID() { return this.event.getEventID(); }
+
+      public boolean studentRegistered(Student student) {
+            for (Registration registration: this.registrations) {
+                  if (student.equals(registration.getStudent()) { return true; }
+            }
+            return false;
+      }
 }
 
 
 
 public class RegistrationManager {
 
-      private ArrayList<Registration> registrations;
+      private ArrayList<Registration> registrations;      // Replace with ArrayList<EventRegistrationManager>
       private StudentManager studentManager;
       private EventManager eventManager;
 
