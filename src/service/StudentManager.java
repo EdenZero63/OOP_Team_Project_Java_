@@ -6,11 +6,13 @@ import model.Student;
 public class StudentManager {
     private ArrayList<Student> students;
 
-    public StudentManager() {
+    public StudentManager()
+    {
         this.students = new ArrayList<Student>();
     }
 
-    public Student findStudentById(String studentId) {
+    public Student findStudentById(String studentId)
+    {
         if (studentId == null) {
             return null;
         }
@@ -24,7 +26,8 @@ public class StudentManager {
         return null;
     }
 
-    public boolean addStudent(Student student) {
+    public boolean addStudent(Student student)
+    {
         if (student == null) {
             System.out.println("Registration Error: Student data cannot be empty.");
             return false;
@@ -40,7 +43,8 @@ public class StudentManager {
         return true;
     }
 
-    public void displayStudentById(String studentId) {
+    public void displayStudentById(String studentId)
+    {
         Student currentStudent = findStudentById(studentId);
         if (currentStudent != null) {
             currentStudent.displayStudent();
@@ -49,7 +53,8 @@ public class StudentManager {
         }
     }
 
-    public void displayAllStudents() {
+    public void displayAllStudents()
+    {
         if (students.isEmpty()) {
             System.out.println("No students are currently enrolled.");
             return;
@@ -65,7 +70,8 @@ public class StudentManager {
         }
     }
 
-    public ArrayList<Student> getAllStudents() {
+    public ArrayList<Student> getAllStudents()
+    {
         return students;
     }
 }
