@@ -1,89 +1,94 @@
 package ui;
-import  model.*;
-import  service.*;
+
+import java.util.ArrayList;
 import java.util.Scanner;
-public class Menu {
-    StudentManager studentManage = new StudentManager();
-    EventManager  eventMang = new EventManager();
-    OrganizerManager orgManager = new OrganizerManager();
-    public static void mainMenu(String[] args){
-        char selector = '0';
-        Scanner input = new Scanner(System.in);
-        //header       
+import exception.*;
+import model.*;
+import service.*;
+
+//console menu
+public class Menu{
+    private Scanner input = new Scanner(System.in);
+
+    private StudentManager studentManage;
+    private EventManager eventMang;
+    private OrganizerManager orgManager;
+    private RegistrationManager regManager;
+
+    public Menu(EventSystem system){
+        this.studentManage = system.getStudentManager();
+        this.eventMang = system.getEventManager();
+        this.orgManager = system.getOrganizerManager();
+        this.regManager = system.getRegistrationManager();
+    }
+
+    public void run(){
+        String choice;
         do{
-            System.out.println("\\033[H\\033[2J");
-            system.out.flush();
-        System.out.println("=================================");
-        System.out.println("CAMPIUS EVENT MANAGMET SYSTEM");
-        System.out.println("=================================");
-        System.out.println(" ");
+            System.out.println();
+            System.out.println("=================================");
+            System.out.println("CAMPUS EVENT MANAGEMENT SYSTEM");
+            System.out.println("=================================");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Create Organizer");
+            System.out.println("4. Create Event");
+            System.out.println("5. View Events");
+            System.out.println("6. Search Events");
+            System.out.println("7. Register Student for Event");
+            System.out.println("8. Cancel Registration");
+            System.out.println("9. View Student Registrations");
+            System.out.println("10. View Event Attendees");
+            System.out.println("11. View Organizers");
+            System.out.println("12. System Reports");
+            System.out.println("0. Exit");
+            System.out.print("Enter selection: ");
+            choice = input.nextLine().trim();
 
-        //Menus
-        System.out.println("1. Add Student");
-        System.out.println("2. View Students");
-         System.out.println("3. Create Organizer");
-        System.out.println("4. Create Event");
-        System.out.println("5. View Events");
-        System.out.println("6.Search Event");
-        System.out.println("7. Register Student for event");
-        System.out.println("8. Cancel Registration");
-        System.out.println("9. View Student Registrations");
-        System.out.println("10. View Event Attendees");
-        System.out.println("11. View Organizers");
-        System.out.println("12. System Reports");
-        System.out.println("0. Exit");
-        System.out.println(" ");
-        System.out.println("Enter Selection: ");
-        selector = input.next().charAt(0);
-
-        switch(selector)
-        {
-            case '1':
-                menu.studentAddMenu();
-                break;
-            case '2':
-                menu.viewStudentMenu();
-                break;
-            case '3':
-                menu.createOrganizerMenu();
-                
-                break;
-            case '4':
-                menu.createEventMenu();
-                break;
-            case '5':
-                menu.viewEventsMenu();
-                break;
-            case '6':
-                menu.searchEventsMenu();
-                break;
-            case '7':
-                menu.registerForEventsMenu();
-                break;
-            case '8':
-                menu.cancelRegistrationMenu();
-                break;
-            case '9':
-                menu.viewSutdentRegsMenu();
-                break;
-            case '10':
-                menu.viewEventAttendsMenu();
-                break;
-            case '11':
-                menu.viewOrganizersMenu();
-                break;
-            case '12':
-                menu.systemsReportMenu();
-                break;
-            case '0':
-                break;
-            default:
-                system.out.println("Invalid Input please select a valid option");
-
-            
-        }
-        input.nextLine();
-        }while(selector != 0;)
+            switch(choice){
+                case "1":
+                    studentAddMenu();
+                    break;
+                case "2":
+                    viewStudentMenu();
+                    break;
+                case "3":
+                    createOrganizerMenu();
+                    break;
+                case "4":
+                    createEventMenu();
+                    break;
+                case "5":
+                    viewEventsMenu();
+                    break;
+                case "6":
+                    searchEventsMenu();
+                    break;
+                case "7":
+                    registerForEventsMenu();
+                    break;
+                case "8":
+                    cancelRegistrationMenu();
+                    break;
+                case "9":
+                    viewSutdentRegsMenu();
+                    break;
+                case "10":
+                    viewEventAttendsMenu();
+                    break;
+                case "11":
+                    viewOrganizersMenu();
+                    break;
+                case "12":
+                    systemsReportMenu();
+                    break;
+                case "0":
+                    System.out.println("Saving and exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid selection, please try again.");
+            }
+        }while(!choice.equals("0"));
     }
 
     //Student Add menu 
