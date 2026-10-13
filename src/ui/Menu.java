@@ -3,84 +3,88 @@ package ui;
 import service.EventSystem;
 import java.util.Scanner;
 public class Menu {
-    public static void mainMenu(String[] args){
+    public static void mainMenu(String[] args)
+    {
         char selector = '0';
         Scanner input = new Scanner(System.in);
-        //header       
-        do{
+
+        //Header       
+        do {
             System.out.println("\\033[H\\033[2J");
             system.out.flush();
-        System.out.println("=================================");
-        System.out.println("CAMPIUS EVENT MANAGMET SYSTEM");
-        System.out.println("=================================");
-        System.out.println(" ");
+            System.out.println("=================================");
+            System.out.println("CAMPIUS EVENT MANAGMET SYSTEM");
+            System.out.println("=================================");
+            System.out.println(" ");
 
-        //Menus
-        System.out.println("1. Add Student");
-        System.out.println("2. View Students");
-        System.out.println("3. Create Event");
-        System.out.println("4. View Events");
-        System.out.println("5.Search Event");
-        System.out.println("6. Register Student for event");
-        System.out.println("7. Cancel Registration");
-        System.out.println("8. View Student Registrations");
-        System.out.println("9. View Event Attendees");
-        System.out.println("10. View Organizers");
-        System.out.println("11. System Reports");
-        System.out.println("0. Exit");
-        System.out.println(" ");
-        System.out.println("Enter Selection: ");
-        selector = input.next().charAt(0);
+            //Menus
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Create Event");
+            System.out.println("4. View Events");
+            System.out.println("5. Search Event");
+            System.out.println("6. Register Student for event");
+            System.out.println("7. Cancel Registration");
+            System.out.println("8. View Student Registrations");
+            System.out.println("9. View Event Attendees");
+            System.out.println("10.View Organizers");
+            System.out.println("11.System Reports");
+            System.out.println("0. Exit");
+            System.out.println(" ");
+            System.out.println("Enter Selection: ");
+            selector = input.next().charAt(0);
 
-        switch(selector)
-        {
-            case '1':
-                menu.studentAddMenu();
-                break;
-            case '2':
-                menu.viewStudentMenu();
-                break;
-            case '3':
-                menu.createEventMenu();
-                break;
-            case '4':
-                menu.viewEventsMenu();
-                break;
-            case '5':
-                menu.searchEventsMenu();
-                break;
-            case '6':
-                menu.registerForEventsMenu();
-                break;
-            case '7':
-                menu.cancelRegistrationMenu();
-                break;
-            case '8':
-                menu.viewSutdentRegsMenu();
-                break;
-            case '9':
-                menu.viewEventAttendsMenu();
-                break;
-            case '10':
-                menu.viewOrganizersMenu();
-                break;
-            case '11':
-                menu.systemsReportMenu();
-                break;
-            case '0':
-                break;
-            default:
-                system.out.println("Invalid Input please select a valid option");
+            switch(selector)
+            {
+                case '1':
+                    menu.studentAddMenu();
+                    break;
+                case '2':
+                    menu.viewStudentMenu();
+                    break;
+                case '3':
+                    menu.createEventMenu();
+                    break;
+                case '4':
+                    menu.viewEventsMenu();
+                    break;
+                case '5':
+                    menu.searchEventsMenu();
+                    break;
+                case '6':
+                    menu.registerForEventsMenu();
+                    break;
+                case '7':
+                    menu.cancelRegistrationMenu();
+                    break;
+                case '8':
+                    menu.viewSutdentRegsMenu();
+                    break;
+                case '9':
+                    menu.viewEventAttendsMenu();
+                    break;
+                case '10':
+                    menu.viewOrganizersMenu();
+                    break;
+                case '11':
+                    menu.systemsReportMenu();
+                    break;
+                case '0':
+                    break;
+                default:
+                    system.out.println("Invalid Input please select a valid option");
 
-            
-        }
-        input.nextLine();
-        }while(selector != 0;)
+
+            }
+            input.nextLine();
+        } while(selector != 0);
     }
 
     //Student Add menu 
-    public  void studentAddMenu(){
+    public void studentAddMenu()
+    {
         Scanner input = new Scanner(System.in);
+
         System.out.println("\\033[H\\033[2J");
         System.out.flush();
         System.out.println("Enter name of student: ");
@@ -94,27 +98,25 @@ public class Menu {
 
         System.out.println("DEMO TEXT Student has been created");
         return;
-
     }
     
     public void viewStudentMenu()
     {
-       Scanner input = new Scanner(System.in);
-        System.out.println("If looking for single student type '1'. If looking for all type '2'");
+        Scanner input = new Scanner(System.in);
+        System.out.println("If looking for single student, type '1'. If looking for all, type '2'");
         char choice = input.next().charAt(0);
 
-        if(choice == '1')
+        if (choice == '1')
         {
             System.out.println("Enter ID of student: ");
             int studentID = input.nextInt();
         }
-        else if(choice == '2')
+        else if (choice == '2')
         {
             System.out.println("DEMO TEXT ALL STUDENTS :D");
         }
 
         return;
-
     }
 
     public void createEventMenu()
@@ -122,33 +124,33 @@ public class Menu {
         Scanner input= new Scanner(System.in);
         boolean flagEvent = true;
 
-        do{
-        System.out.println("What Type of Event is being created?");
-        System.out.println("1.Academic Event");
-        System.out.println("2.Club Event");
-        System.out.println("3.Career Event");
-        System.out.println("4.Social Event");
-        char eventType= input.next().charAt(0);
-        
-            switch(eventType)
-            {
-            case '1': System.out.println("Enter the major this event is associated with: ");
-                      String  majorEvent = input.nextLine();
-                break;
-            case '2': System.out.println("Enter the club hosting event: ");
-                      String clubName = input.nextLine();
-                     break;
-            case '3': System.out.println("Enter the name of the company organizing Event: ");
-                      String orgName= input.nextLine();
-                      break;
-            case '4': System.out.println("UNSURE WHAT GOES HERE");
+        do {
+            System.out.println("What Type of Event is being created?");
+            System.out.println("1. Academic Event");
+            System.out.println("2. Club Event");
+            System.out.println("3. Career Event");
+            System.out.println("4. Social Event");
+            char eventType= input.next().charAt(0);
+
+                switch(eventType)
+                {
+                case '1': System.out.println("Enter the major this event is associated with: ");
+                          String  majorEvent = input.nextLine();
                     break;
-            default:
-                 System.out.println("Invalid Input please enter valid input.");
-                 flagEvent = false;
-                 
-            }
-        }while(flagEvent != false);
+                case '2': System.out.println("Enter the club hosting event: ");
+                          String clubName = input.nextLine();
+                         break;
+                case '3': System.out.println("Enter the name of the company organizing Event: ");
+                          String orgName= input.nextLine();
+                          break;
+                case '4': System.out.println("UNSURE WHAT GOES HERE");
+                        break;
+                default:
+                     System.out.println("Invalid Input please enter valid input.");
+                     flagEvent = false;
+
+                }
+        } while(flagEvent != false);
 
         System.out.println("Enter Name of Event: ");
         String eventName = input.nextLine();
@@ -188,27 +190,27 @@ public class Menu {
         System.out.println("Enter student ID");
         String studentID = input.nextLine();
 
-        System.out.println("Are you [STUDENT NAME]?(Y/N)");
+        System.out.println("Are you [STUDENT NAME]? (Y/N)");
         char confirm = input.next().charAt(0);
-        do{
-        if(confirm == 'Y' || confirm == 'y')
-        {
-            System.out.println("Enter the ID for the Event you'd like to register for");
-            String eventID = input.nextLine();
-            System.out.println("REGISTERED FOR EVENT");
-        }
-        System.out.println("Do you wish to exit menu?(Y/N)");
-        confirm = input.next().charAt(0);
-        if(confirm == 'Y'|| confirm == 'y')
+        do {
+            if (Character.toUpperCase(confirm) == 'Y')
             {
-                
-                flag =true;
+                System.out.println("Enter the ID for the Event you'd like to register for");
+                String eventID = input.nextLine();
+                System.out.println("REGISTERED FOR EVENT");
+            }
+            System.out.println("Do you wish to exit menu? (Y/N)");
+            confirm = input.next().charAt(0);
+            if (Character.toUpperCase(confirm) == 'Y')
+                {
 
-        }
-    }while(flag!= true);
+                    flag = true;
+
+            }
+        } while(flag != true);
     }
 
-    public void  cancelRegistrationMenu()
+    public void cancelRegistrationMenu()
     {
         boolean flag = false;
         Scanner input = new Scanner(System.in);
@@ -216,31 +218,29 @@ public class Menu {
         System.out.println("Enter student ID");
         String studentID = input.nextLine();
 
-        System.out.println("Are you [STUDENT NAME]?(Y/N)");
+        System.out.println("Are you [STUDENT NAME]? (Y/N)");
         char confirm = input.next().charAt(0);
-        do{
-        if(confirm == 'Y' || confirm == 'y')
-        {
-            System.out.println("LIST EVENTS REGISTERED FOR");
-            System.out.println("Enter name of Event you'd like to cancel: ");
-            String eventName = input.nextLine(); 
+        do {
+            if (Character.toUpperCase(confirm) == 'Y')
+            {
+                System.out.println("LIST EVENTS REGISTERED FOR");
+                System.out.println("Enter name of Event you'd like to cancel: ");
+                String eventName = input.nextLine(); 
 
-            System.out.println("REMOVED FROM EVENT");
+                System.out.println("REMOVED FROM EVENT");
 
-        }
-        System.out.println("Do you wish to exit menu?(Y/N)");
+            }
+            System.out.println("Do you wish to exit menu? (Y/N)");
 
-        confirm = input.next().charAt(0);
-         if(confirm == 'Y'|| confirm == 'y')
-        {
-                flag = true;
-        }
-
-        
-    }while(flag!= true);
+            confirm = input.next().charAt(0);
+            if(Character.toUpperCase(confirm) == 'Y')
+            {
+                    flag = true;
+            }
+        } while(flag != true);
     }
 
-     public void  viewSutdentRegsMenu()
+     public void viewSutdentRegsMenu()
     {
         boolean flag = false;
         Scanner input = new Scanner(System.in);
@@ -250,25 +250,23 @@ public class Menu {
 
         System.out.println("Are you looking for [Event Name]?(Y/N)");
         char confirm = input.next().charAt(0);
-        do{
-        if(confirm == 'Y' || confirm == 'y')
-        {
-            System.out.println("LIST EVENT ATTENDES");
-            
-        }
-        
-        System.out.println("Do you wish to exit menu?(Y/N)");
+        do {
+            if(Character.toUpperCase(confirm) == 'Y')
+            {
+                System.out.println("LIST EVENT ATTENDES");
+            }
 
-        confirm = input.next().charAt(0);
-        if(confirm == 'Y'|| confirm == 'y')
-        {
-             flag = true;   
-        }
+            System.out.println("Do you wish to exit menu?(Y/N)");
 
-        
-    }while(flag!= true);
+            confirm = input.next().charAt(0);
+            if(Character.toUpperCase(confirm) == 'Y')
+            {
+                flag = true;   
+            }
+        } while(flag != true);
     }
-    public void  viewOrganizersMenu()
+
+    public void viewOrganizersMenu()
     {
         boolean flag = false;
         Scanner input = new Scanner(System.in);
@@ -279,20 +277,20 @@ public class Menu {
         System.out.println("Are you [Organizer Name]?(Y/N)");
         char confirm = input.next().charAt(0);
         do{
-        if(confirm == 'Y' || confirm == 'y')
-        {
-            System.out.println("LIST EVENTS Organizing");
-        }
-        
-        System.out.println("Do you wish to exit menu?(Y/N)");
+            if(Character.toUpperCase(confirm) == 'Y')
+            {
+                System.out.println("LIST EVENTS Organizing");
+            }
 
-        confirm = input.next().charAt(0);
-        if(confirm == 'Y'|| confirm == 'y')
-        {
-             flag = true;   
-        }
+            System.out.println("Do you wish to exit menu?(Y/N)");
+
+            confirm = input.next().charAt(0);
+            if(Character.toUpperCase(confirm) == 'Y')
+            {
+                flag = true;
+            }
         
-    }while(flag!= true);
+        }while(flag != true);
     }
 
     public void  systemsReportMenu()
@@ -304,27 +302,26 @@ public class Menu {
         System.out.println("2. View Events Report");
         System.out.println("3. View Organizers Report");
         do{
-        char choice =  input.next().charAt(0);
+            char choice =  input.next().charAt(0);
 
-        switch(choice)
-        {
-            case'1':
-                    System.out.println("STUDENTS REPORT");
-                    flag =true;
-                    break;
-            case'2':
-                    System.out.println("EVENTS REPORT");
-                    flag = true;
-                    break;
-            case'3':
-                    System.out.println("ORGANIZER REPORT");
-                    flag = true;
-                    break;
-            default:
-                    System.out.println("Incorrect input please enter proper value");
-                    
-        }
-        }while(flag != true);
-    
+            switch(choice)
+            {
+                case'1':
+                        System.out.println("STUDENTS REPORT");
+                        flag =true;
+                        break;
+                case'2':
+                        System.out.println("EVENTS REPORT");
+                        flag = true;
+                        break;
+                case'3':
+                        System.out.println("ORGANIZER REPORT");
+                        flag = true;
+                        break;
+                default:
+                        System.out.println("Incorrect input please enter proper value");
+
+            }
+        } while(flag != true);
     }
 }
