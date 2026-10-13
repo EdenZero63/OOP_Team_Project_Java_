@@ -7,11 +7,12 @@ public class Event{
     private String location;
     private int capacity;
 
-    public Event(String eventId, String eventName, String date, String time, String location, int capacity){
-        if(eventId == null || eventId.trim().isEmpty()){
+    public Event(String eventId, String eventName, String date, String time, String location, int capacity)
+    {
+        if (eventId == null || eventId.trim().isEmpty()) {
             throw new IllegalArgumentException("An event needs an ID.");
         }
-        if(capacity <= 0){
+        if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be at least 1.");
         }
 
@@ -23,48 +24,59 @@ public class Event{
         this.capacity = capacity;
     }
 
-    public String getEventId(){
+    public String getEventId()
+    {
         return eventId;
     }
 
-    public String getEventName(){
+    public String getEventName()
+    {
         return eventName;
     }
 
-    public String getDate(){
+    public String getDate()
+    {
         return date;
     }
 
-    public String getTime(){
+    public String getTime()
+    {
         return time;
     }
 
-    public String getLocation(){
+    public String getLocation()
+    {
         return location;
     }
 
-    public int getCapacity(){
+    public int getCapacity()
+    {
         return capacity;
     }
 
-    public void setEventName(String eventName){
+    public void setEventName(String eventName)
+    {
         this.eventName = eventName;
     }
 
-    public void setDate(String date){
+    public void setDate(String date)
+    {
         this.date = date;
     }
 
-    public void setTime(String time){
+    public void setTime(String time)
+    {
         this.time = time;
     }
 
-    public void setLocation(String location){
+    public void setLocation(String location)
+    {
         this.location = location;
     }
 
     //subclasses add their own line after this
-    public void displayEvent(){
+    public void displayEvent()
+    {
         System.out.println("Event ID   : " + eventId);
         System.out.println("Type       : " + getClass().getSimpleName());
         System.out.println("Name       : " + eventName);
@@ -75,7 +87,8 @@ public class Event{
     }
 
     @Override
-    public String toString(){
+    public String toString()
+    {
         return eventId + " - " + eventName + " - " + date + " - " + time + " - " + location;
     }
 }
