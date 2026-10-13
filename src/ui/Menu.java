@@ -1,8 +1,11 @@
 package ui;
-
-import service.EventSystem;
+import  model.*;
+import  service.*;
 import java.util.Scanner;
 public class Menu {
+    StudentManager studentManage = new StudentManager();
+    EventManager  eventMang = new EventManager();
+    OrganizerManager orgManager = new OrganizerManager();
     public static void mainMenu(String[] args){
         char selector = '0';
         Scanner input = new Scanner(System.in);
@@ -18,15 +21,16 @@ public class Menu {
         //Menus
         System.out.println("1. Add Student");
         System.out.println("2. View Students");
-        System.out.println("3. Create Event");
-        System.out.println("4. View Events");
-        System.out.println("5.Search Event");
-        System.out.println("6. Register Student for event");
-        System.out.println("7. Cancel Registration");
-        System.out.println("8. View Student Registrations");
-        System.out.println("9. View Event Attendees");
-        System.out.println("10. View Organizers");
-        System.out.println("11. System Reports");
+         System.out.println("3. Create Organizer");
+        System.out.println("4. Create Event");
+        System.out.println("5. View Events");
+        System.out.println("6.Search Event");
+        System.out.println("7. Register Student for event");
+        System.out.println("8. Cancel Registration");
+        System.out.println("9. View Student Registrations");
+        System.out.println("10. View Event Attendees");
+        System.out.println("11. View Organizers");
+        System.out.println("12. System Reports");
         System.out.println("0. Exit");
         System.out.println(" ");
         System.out.println("Enter Selection: ");
@@ -41,30 +45,34 @@ public class Menu {
                 menu.viewStudentMenu();
                 break;
             case '3':
-                menu.createEventMenu();
+                menu.createOrganizerMenu();
+                
                 break;
             case '4':
-                menu.viewEventsMenu();
+                menu.createEventMenu();
                 break;
             case '5':
-                menu.searchEventsMenu();
+                menu.viewEventsMenu();
                 break;
             case '6':
-                menu.registerForEventsMenu();
+                menu.searchEventsMenu();
                 break;
             case '7':
-                menu.cancelRegistrationMenu();
+                menu.registerForEventsMenu();
                 break;
             case '8':
-                menu.viewSutdentRegsMenu();
+                menu.cancelRegistrationMenu();
                 break;
             case '9':
-                menu.viewEventAttendsMenu();
+                menu.viewSutdentRegsMenu();
                 break;
             case '10':
-                menu.viewOrganizersMenu();
+                menu.viewEventAttendsMenu();
                 break;
             case '11':
+                menu.viewOrganizersMenu();
+                break;
+            case '12':
                 menu.systemsReportMenu();
                 break;
             case '0':
@@ -92,7 +100,10 @@ public class Menu {
         System.out.println("Enter Student email: ");
         String studentEmail = input.nextLine();
 
-        System.out.println("DEMO TEXT Student has been created");
+        System.out.println("Enter Student major: ");
+        String studentMajor = input.nextLine();
+        Student student= new Student(studentID, studentName,studentEmail, studentMajor);        
+         studentManage.addStudent(student);
         return;
 
     }
@@ -100,28 +111,50 @@ public class Menu {
     public void viewStudentMenu()
     {
        Scanner input = new Scanner(System.in);
-        System.out.println("If looking for single student type '1'. If looking for all type '2'");
-        char choice = input.next().charAt(0);
-
-        if(choice == '1')
-        {
+        
             System.out.println("Enter ID of student: ");
-            int studentID = input.nextInt();
-        }
-        else if(choice == '2')
-        {
-            System.out.println("DEMO TEXT ALL STUDENTS :D");
-        }
+            String studentID = input.nextLine();
+            studentManage.findStudentById(studentID);
 
         return;
 
     }
+    public void createOrganizerMenu(){
+        Scanner input= new Scanner(System.in);
+        String orgID= "";
+        String orgName= "";
+        String email = "";
+        String department = "";
+        
+        System.out.println("ORGAINZER CREATE MENU");
 
+        System.out.println("Do you wish to create an Organizer?(Y/N): ");
+        char choice = input.next().charAt(0);
+        if(choice =='Y'|| choice == 'y')
+        {
+        System.out.pritln("Enter Organizer ID: ");
+            orgID = input.nextLine();
+        System.out.println("Enter orgName: ");
+        orgName = input.nextLine();
+        System.out.println("Enter email: ");
+        email = input.nextLine();
+        System.out.println("Enter Department: ");
+        department= input.nextLine();
+        orgManager.Organizer(orgID,orgName,email,department);
+        }
+
+    }
     public void createEventMenu()
     {
         Scanner input= new Scanner(System.in);
         boolean flagEvent = true;
-
+        //event Inputs
+        String eventID= "";
+        String eventName= "";
+        String eventDate ="";
+        String eventTime = "";
+        String eventLocation ="";
+        int capacity = 0;
         do{
         System.out.println("What Type of Event is being created?");
         System.out.println("1.Academic Event");
@@ -130,18 +163,104 @@ public class Menu {
         System.out.println("4.Social Event");
         char eventType= input.next().charAt(0);
         
+
+         
+                    
+           
+
+                 
             switch(eventType)
             {
-            case '1': System.out.println("Enter the major this event is associated with: ");
-                      String  majorEvent = input.nextLine();
+            case '1':
+                System.out.println("Enter Event ID: ");
+                    eventID =input.nextLine();   
+                    
+                System.out.println("Enter Name of Event: ");
+                    eventName = input.nextLine();
+                System.out.println("Enter Date of Event(MM/DD/YYYY): ");
+                  eventDate = input.nextLine();
+
+                 System.out.println("Enter Time(XX:YY PM/AM): ");
+                eventTime = input.nextLine();
+                
+                System.out.println("Enter Location of Event: ");
+                    eventLocation = input.nextLine();
+
+                System.out.println("Enter capacity of  participants: ");
+                     capacity  = input.nextInt();       
+                System.out.println("Enter the major this event is associated with: ");
+                     String  majorEvent = input.nextLine();
+                     
+                    eventMang = eventMang.AcademicEvent(eventID,eventName,eventDate,eventTime,eventLocation,capacity,majorEvent);
+                    
                 break;
-            case '2': System.out.println("Enter the club hosting event: ");
+            case '2':
+                    System.out.println("Enter Event ID: ");
+                        eventID =input.nextLine();   
+                    
+                    System.out.println("Enter Name of Event: ");
+                        eventName = input.nextLine(); 
+                    System.out.println("Enter the club hosting event: ");
                       String clubName = input.nextLine();
+                    
+                    System.out.println("Enter Date of Event(MM/DD/YYYY): ");
+                         eventDate = input.nextLine();
+
+                     System.out.println("Enter Time(XX:YY PM/AM): ");
+                        eventTime = input.nextLine();
+                
+                    System.out.println("Enter Location of Event: ");
+                        eventLocation = input.nextLine();
+
+                    System.out.println("Enter capacity of  participants: ");
+                        capacity  = input.nextInt();       
+                      eventMang= eventMang.ClubEvent(eventID,eventName,eventDate,eventTime,eventLocation,capacity,clubName);
                      break;
-            case '3': System.out.println("Enter the name of the company organizing Event: ");
+            case '3':
+                    System.out.println("Enter Event ID: ");
+                        eventID =input.nextLine();   
+                    
+                    System.out.println("Enter Name of Event: ");
+                        eventName = input.nextLine(); 
+                     
+                   System.out.println("Enter Date of Event(MM/DD/YYYY): ");
+                      eventDate = input.nextLine();
+
+                     System.out.println("Enter Time(XX:YY PM/AM): ");
+                         eventTime = input.nextLine();
+                
+                    System.out.println("Enter Location of Event: ");
+                        eventLocation = input.nextLine();
+
+                    System.out.println("Enter capacity of  participants: ");
+                        capacity  = input.nextInt();       
+                    System.out.println("Enter the name of the company organizing Event: ");
                       String orgName= input.nextLine();
+
+                    eventMang= eventMang.addEvent(eventID,eventName,eventDate,eventTime,eventLocation,capacity,orgName);
                       break;
-            case '4': System.out.println("UNSURE WHAT GOES HERE");
+            case '4':
+                    System.out.println("Enter Event ID: ");
+                        eventID =input.nextLine();   
+                    
+                    System.out.println("Enter Name of Event: ");
+                        eventName = input.nextLine(); 
+                      
+                    System.out.println("Enter Date of Event(MM/DD/YYYY): ");
+                        eventDate = input.nextLine();
+
+                    System.out.println("Enter Time(XX:YY PM/AM): ");
+                        eventTime = input.nextLine();
+                
+                    System.out.println("Enter Location of Event: ");
+                        eventLocation = input.nextLine();
+
+                    System.out.println("Enter capacity of  participants: ");
+                        capacity  = input.nextInt();       
+                    
+                    System.out.println("What is the theme of the social event");
+                        String theme = input.nextLine();
+                    eventMang= eventMang.addEvent(eventId,eventName,eventDate,eventTime,eventLocation,capacity,orgName);
                     break;
             default:
                  System.out.println("Invalid Input please enter valid input.");
@@ -150,25 +269,12 @@ public class Menu {
             }
         }while(flagEvent != false);
 
-        System.out.println("Enter Name of Event: ");
-        String eventName = input.nextLine();
-
-        System.out.println("Enter Date of Event(name of Month and Day): ");
-        String eventDate = input.nextLine();
-
-        System.out.println("Enter Location of Event: ");
-        String eventLocation = input.nextLine();
-
-        System.out.println("Enter capacity of  participants: ");
-        int  participants = input.nextInt();       
-
-        System.out.println("Enter Event ID: ");
-        int eventID =input.nextInt();
+      
     }
 
     public void viewEventsMenu()
     {
-        System.out.println("DUMMY TEXT: LIST OF EVENTS");
+       eventMang.displayAllEvents();
     }
 
     public void serachEventsMenu()
@@ -182,19 +288,23 @@ public class Menu {
 
     public void  registerForEventsMenu()
     {
+      
         boolean flag = false;
         Scanner input = new Scanner(System.in);
         
         System.out.println("Enter student ID");
         String studentID = input.nextLine();
-
+        
         System.out.println("Are you [STUDENT NAME]?(Y/N)");
+        Student currentStudent =  studentManage.findStudentById(studentID);
+
         char confirm = input.next().charAt(0);
         do{
         if(confirm == 'Y' || confirm == 'y')
         {
             System.out.println("Enter the ID for the Event you'd like to register for");
             String eventID = input.nextLine();
+
             System.out.println("REGISTERED FOR EVENT");
         }
         System.out.println("Do you wish to exit menu?(Y/N)");
@@ -247,7 +357,7 @@ public class Menu {
         
         System.out.println("Enter Event Id: ");
         String eventID = input.nextLine();
-
+        
         System.out.println("Are you looking for [Event Name]?(Y/N)");
         char confirm = input.next().charAt(0);
         do{
