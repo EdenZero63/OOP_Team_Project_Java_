@@ -18,6 +18,7 @@ public class EventRegistrationManager {
 
       public void registerStudent(String registrationID, Student student) {
             Registration registration = new Registration(registrationID, student, this.event);
+            // Update registraions
       }
 
       public void cancleRegistration(Student student)
