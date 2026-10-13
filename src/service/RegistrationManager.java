@@ -7,12 +7,18 @@ import exception.NotFoundException;
 
 /* ---- WORK IN PROGRESS ---- */
 
-/* public class EventRegistrationManager {
+public class EventRegistrationManager {
       private ArrayList<Registration> registrations;
       private Event event;      // Each EventRegistrationManager would manage student registrations for the one event. Makes seaching registrations easier.
 
+      public EventRegistrationManager(Event event) {
+            this.event = event;
+            registraions = new ArrayList<>();
+      }
+
+      public void registerStudent(String registrationID, Student student) {}
 }
-*/
+
 
 
 public class RegistrationManager {
