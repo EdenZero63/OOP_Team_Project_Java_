@@ -10,7 +10,7 @@ import exception.NotFoundException;
 
 public class RegistrationManager {
 
-      private ArrayList<Registration> registrations;
+      private ArrayList<Registration> registrations;      // Is this supposed to be a list of all registrations for all events? That would be the maximally bad implementation for searches. Use a 2D array for each event and then each student registered.
       private StudentManager studentManager;
 
       public RegistrationManager(StudentManager studentManager){
