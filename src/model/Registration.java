@@ -3,14 +3,15 @@ package model;
 import java.time.LocalDate;
 
 public class Registration{
-    //fields
+    // Fields
     private String registrationId;
     private Student student;
     private Event event;
     private LocalDate registrationDate;
 
-    //constructors, date defaults to today
-    public Registration(String registrationId, Student student, Event event){
+    // Constructors, date defaults to today
+    public Registration(String registrationId, Student student, Event event)
+    {
         this(registrationId, student, event, LocalDate.now());
     }
 
@@ -25,25 +26,30 @@ public class Registration{
         this.registrationDate = registrationDate;
     }
 
-    //getters
-    public String getRegistrationId(){
+    // Getters
+    public String getRegistrationId()
+    {
         return registrationId;
     }
 
-    public Student getStudent(){
+    public Student getStudent()
+    {
         return student;
     }
 
-    public Event getEvent(){
+    public Event getEvent()
+    {
         return event;
     }
 
-    public LocalDate getRegistrationDate(){
+    public LocalDate getRegistrationDate()
+    {
         return registrationDate;
     }
 
-    //display
-    public void displayRegistration(){
+    // Display
+    public void displayRegistration()
+    {
         System.out.println("Registration ID : " + registrationId);
         System.out.println("Student         : " + student.getName() + " (" + student.getStudentId() + ")");
         System.out.println("Event Type      : " + event.getClass().getSimpleName());
