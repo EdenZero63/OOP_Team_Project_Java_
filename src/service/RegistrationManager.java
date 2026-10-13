@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 import model.Registration;
 import model.Student;
+import exception.EventFullException;
 import exception.NotFoundException;
 
 /* ---- WORK IN PROGRESS ---- */
@@ -23,7 +24,7 @@ public class RegistrationManager {
 
       /*IP -- still need to check event -- currently only checks if student exsists! */
       public void registerStudent(String studentId, String eventId, String registrationDate)
-        throws NotFoundException {
+        throws NotFoundException, EventFullException {
           Student student = studentManager.findStudentById(studentId);
           Event event = eventManager.findEventById(eventId);
 
@@ -34,10 +35,13 @@ public class RegistrationManager {
             throw new NotFoundException("Event not found.");
             }
 
+              int studentsRegistered = 0;
               // code to search for if the student has registered for that event.
               for (int i = 0; i < this.registrations.size(); i++) {
-                    if ((student == this.registrations.get(i).getStudent())&&(event == this.registrations.get(i).getEvent())) {
-                          throw new NotFoundException("Student already registered for Event.");
+                    if (event == this.registrations.get(i).getEvent()) {
+                          if (student == this.registrations.get(i).getStudent()) { throw new NotFoundException("Student already registered for Event."); }
+                          studentsRegistered++;
+                          if (studentsRegistered > event.getCapacity()) { throw new EventFullException(event.getEventName() + " is full."); }
                     }
               }
 
