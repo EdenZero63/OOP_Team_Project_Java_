@@ -7,7 +7,8 @@ public class EventSystem{
     private EventManager eventManager;
     private RegistrationManager registrationManager;
 
-    public EventSystem(){
+    public EventSystem()
+    {
         this.studentManager = new StudentManager();
         this.organizerManager = new OrganizerManager();
         this.eventManager = new EventManager();
@@ -15,19 +16,23 @@ public class EventSystem{
     }
 
     //getters
-    public StudentManager getStudentManager(){
+    public StudentManager getStudentManager()
+    {
         return studentManager;
     }
 
-    public OrganizerManager getOrganizerManager(){
+    public OrganizerManager getOrganizerManager()
+    {
         return organizerManager;
     }
 
-    public EventManager getEventManager(){
+    public EventManager getEventManager()
+    {
         return eventManager;
     }
 
-    public RegistrationManager getRegistrationManager(){
+    public RegistrationManager getRegistrationManager()
+    {
         return registrationManager;
     }
 }
