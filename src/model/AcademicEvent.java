@@ -4,8 +4,8 @@ package model;
 public class AcademicEvent extends Event{
     private String major;
 
-    public AcademicEvent(String eventId, String eventName, String date, String time, String location, int capacity, String major){
-        super(eventId, eventName, date, time, location, capacity);
+    public AcademicEvent(String eventId, String eventName, String description, String date, String time, String location, int capacity, String major){
+        super(eventId, eventName, description, date, time, location, capacity);
         this.major = major;
     }
 
