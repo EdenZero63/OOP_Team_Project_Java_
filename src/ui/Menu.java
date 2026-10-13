@@ -116,13 +116,13 @@ public class Menu{
     public void viewStudentMenu()
     {
        Scanner input = new Scanner(System.in);
-        
+       System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("VIEW STUDENT MENU");
             System.out.println("Enter ID of student: ");
             String studentID = input.nextLine();
-            studentManage.findStudentById(studentID);
-
+            studentManage.displayStudentById(studentID);
         return;
-
     }
     public void createOrganizerMenu(){
         Scanner input= new Scanner(System.in);
@@ -131,13 +131,15 @@ public class Menu{
         String email = "";
         String department = "";
         
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
         System.out.println("ORGAINZER CREATE MENU");
 
         System.out.println("Do you wish to create an Organizer?(Y/N): ");
         char choice = input.next().charAt(0);
         if(choice =='Y'|| choice == 'y')
         {
-        System.out.pritln("Enter Organizer ID: ");
+        System.out.println("Enter Organizer ID: ");
             orgID = input.nextLine();
         System.out.println("Enter orgName: ");
         orgName = input.nextLine();
@@ -145,7 +147,14 @@ public class Menu{
         email = input.nextLine();
         System.out.println("Enter Department: ");
         department= input.nextLine();
-        orgManager.Organizer(orgID,orgName,email,department);
+      try{
+        Organizer newOrganizer = new Organizer(orgID, orgName, email, department);
+        orgManager.addOrganizer(newOrganizer);
+        System.out.println("Organizer added.");
+        }catch(DuplicateIdException e){
+            System.out.println(e.getMessage());
+        }catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
 
     }
@@ -161,6 +170,8 @@ public class Menu{
         String eventLocation ="";
         int capacity = 0;
         do{
+            System.out.println("EVENT CREATE MENU");
+
         System.out.println("What Type of Event is being created?");
         System.out.println("1.Academic Event");
         System.out.println("2.Club Event");
@@ -170,8 +181,6 @@ public class Menu{
         
 
          
-                    
-           
 
                  
             switch(eventType)
@@ -390,13 +399,21 @@ public class Menu{
         
         System.out.println("Enter Organizer ID:  ");
         String organizerID = input.nextLine();
-
-        System.out.println("Are you [Organizer Name]?(Y/N)");
+        Organizer currentOrganizer = orgManager.findOrganizerById(organizerID);
+        
+        String currentOrgName = currentOrganizer.getName();
+        System.out.println("Are you" +currentOrgName+ "(Y/N)");
         char confirm = input.next().charAt(0);
         do{
         if(confirm == 'Y' || confirm == 'y')
         {
-            System.out.println("LIST EVENTS Organizing");
+           try{ 
+              orgManager.displayOrganizerById(organizerID);
+           }
+           catch(NotFoundException e){
+             System.out.println(e.getMessage());
+           }
+              
         }
         
         System.out.println("Do you wish to exit menu?(Y/N)");
