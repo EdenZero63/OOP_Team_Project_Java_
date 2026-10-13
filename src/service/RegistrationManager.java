@@ -22,8 +22,7 @@ public class RegistrationManager {
         this.registraions = new ArrayList<>();
       }
 
-      /*IP -- still need to check event -- currently only checks if student exsists! */
-      public void registerStudent(String studentId, String eventId, String registrationDate)
+      public void registerStudent(String registrationId, String studentId, String eventId, String registrationDate)
         throws NotFoundException, EventFullException {
           Student student = studentManager.findStudentById(studentId);
           Event event = eventManager.findEventById(eventId);
@@ -44,11 +43,6 @@ public class RegistrationManager {
                           if (studentsRegistered > event.getCapacity()) { throw new EventFullException(event.getEventName() + " is full."); }
                     }
               }
-
-              // code to generate or input registrationId value.
-              // IP -- code to generate or input value for registrationId.
-              String registrationId = "";
-              
               this.registrations.add(new Registration(registrationId, student, event, registrationDate));
         }
 
@@ -87,6 +81,8 @@ public class RegistrationManager {
                   throw new NotFoundException("Registration not found.");
                   
       }
+
+      public ArrayList<Registration> getRegistrations() { return this.registrations; }
 
         /*  NEED: 
           -EventManager.java  
