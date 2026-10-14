@@ -7,10 +7,17 @@ public class Student {
     private String major;
 
     public Student(String studentId, String name, String email, String major) {
-        this.studentId = studentId;
-        this.name = name;
-        this.email = email;
-        this.major = major;
+        if (studentId == null || studentId.trim().isEmpty()) {
+            throw new IllegalArgumentException("A student needs an ID.");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("A student needs a name.");
+        }
+
+        this.studentId = studentId.trim();
+        this.name = name.trim();
+        this.email = email == null ? "" : email.trim();
+        this.major = major == null ? "" : major.trim();
     }
 
     public String getStudentId() {

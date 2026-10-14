@@ -1,5 +1,7 @@
 package model;
-public class Event{
+
+//abstract: every event is one of the four types, never a plain Event
+public abstract class Event{
     private String eventId;
     private String eventName;
     private String description;
