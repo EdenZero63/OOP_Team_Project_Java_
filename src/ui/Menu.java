@@ -311,9 +311,9 @@ public class Menu{
     {
         clearScreen();
         System.out.println("REGISTER FOR EVENTS MENU");
-        System.out.println("Enter student ID");
+        System.out.println("Enter student ID: ");
         String currentStudentID = input.nextLine().trim();
-        System.out.println("Enter Event ID ");
+        System.out.println("Enter event ID: ");
         String currentEventID = input.nextLine().trim();
 
         try{
@@ -333,14 +333,14 @@ public class Menu{
             clearScreen();
            
             System.out.println("CANCEL REGISTRATION MENU");
-            System.out.println("Enter Student ID");
-            String currentStudentID = input.nextLine();
+            System.out.println("Enter student ID: ");
+            String currentStudentID = input.nextLine().trim();
 
-            System.out.println("Enter event ID:  ");
+            System.out.println("Enter event ID: ");
             String currentEventID =input.nextLine().trim();
             try{
                 regManager.cancelRegistration(currentStudentID,currentEventID);
-                System.out.println("Event Cancelled Successfully");
+                System.out.println("Registration cancelled successfully.");
             }  catch(NotFoundException e){
                 System.out.println(e.getMessage());
             }
@@ -377,14 +377,14 @@ public class Menu{
     }
     public void viewEventAttendsMenu(){
         clearScreen();
-        System.out.println("VIEW EVENT ATTENDANTS MENU");
+        System.out.println("VIEW EVENT ATTENDEES MENU");
 
         System.out.println("Enter Event ID: ");
         String currentEventID = input.nextLine().trim();
 
         try{
             ArrayList<Student> students = regManager.getStudentsForEvent(currentEventID);
-            System.out.println("Events: "+ eventMang.findEventById(currentEventID).getEventName());
+            System.out.println("Event: "+ eventMang.findEventById(currentEventID).getEventName());
             System.out.println();
             System.out.println("Attending Event: ");
             if(students.isEmpty())
@@ -447,8 +447,6 @@ public class Menu{
         ArrayList<Event> events = eventMang.getAllEvents();
         ArrayList<Registration> registrations = regManager.getRegistrations();
 
-
-        System.out.println("SYSTEM REPORTS");
         System.out.println("1. Students registered per event");
         System.out.println("2. Events with available capacity");
         System.out.println("3. Full events");
@@ -476,8 +474,6 @@ public class Menu{
                 }
                 break;
                 default:
-                System.out.println("Incorrect input please enter proper value");
-                    
                 System.out.println("Invalid report choice.");
                 }
     }
