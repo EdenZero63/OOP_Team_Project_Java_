@@ -123,10 +123,13 @@ public class Menu{
 
         System.out.println("Enter Student major: ");
         String studentMajor = input.nextLine();
-        Student student= new Student(studentID, studentName,studentEmail, studentMajor);        
-        studentManage.addStudent(student);
-        return;
-
+        try{
+            Student student= new Student(studentID, studentName,studentEmail, studentMajor);
+            studentManage.addStudent(student);
+        }
+        catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void viewStudentMenu()
