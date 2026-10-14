@@ -355,7 +355,7 @@ public class Menu{
             System.out.println("Attending Event: ");
             if(students.isEmpty())
             {
-                System.out.println("NONE")
+                System.out.println("NONE");
             }
             else{
                 for(int count =0; count<students.size(); count++)
@@ -400,7 +400,7 @@ public class Menu{
     public void systemsReportMenu(){
         ReportGenerator reports = new ReportGenerator();
         ArrayList<Event> events = eventMang.getAllEvents();
-        ArrayList<Registration> registrations = regManager.getAllRegistrations();
+        ArrayList<Registration> registrations = regManager.getRegistrations();
 
 
         System.out.println("SYSTEM REPORTS");
