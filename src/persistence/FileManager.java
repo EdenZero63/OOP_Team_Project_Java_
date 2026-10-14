@@ -6,169 +6,199 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Base64;
 
-import exception.DuplicateIdException;
+import model.Student;
+import model.Organizer;
+import model.Registration;
 import model.Event;
-import model.AcademicEvent;
-import model.ClubEvent;
-import model.CareerEvent;
-import model.SocialEvent;
-import service.EventSystem;
+
+import service.StudentManager;
+import service.OrganizerManager;
+import service.EventManager;
+import service.RegistrationManager;
+
+import exception.DuplicateRegistrationException;
+import exception.EventFullException;
+import exception.NotFoundException;
 
 public class FileManager {
 
-    private static final Path FILE_PATH =
-            Path.of("data", "events.txt");
+    private static final Path DATA_FOLDER = Path.of("data");
+    private static final Path STUDENTS_FILE =
+            DATA_FOLDER.resolve("students.txt");
+    private static final Path ORGANIZERS_FILE =
+            DATA_FOLDER.resolve("organizers.txt");
+    private static final Path REGISTRATIONS_FILE =
+            DATA_FOLDER.resolve("registrations.txt");
 
-    public void loadAll(EventSystem system) {
-        if (system == null) {
-            return;
-        }
-
-        if (!Files.exists(FILE_PATH)) {
-            System.out.println("No saved event file found.");
-            return;
-        }
-
-        try (BufferedReader reader = Files.newBufferedReader(
-                FILE_PATH, StandardCharsets.UTF_8)) {
-
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                try {
-                    String[] data = line.split("\\|", -1);
-
-                    if (data.length != 9) {
-                        System.out.println(
-                                "Skipping invalid event record.");
-                        continue;
-                    }
-
-                    String type = decode(data[0]);
-                    String eventID = decode(data[1]);
-                    String eventName = decode(data[2]);
-                    String description = decode(data[3]);
-                    String eventDate = decode(data[4]);
-                    String eventTime = decode(data[5]);
-                    String eventLocation = decode(data[6]);
-                    int capacity = Integer.parseInt(decode(data[7]));
-                    String detail = decode(data[8]);
-
-                    // Skip events that are already loaded.
-                    if (system.getEventManager().findEventById(eventID) != null) {
-                        continue;
-                    }
-
-                    Event event;
-
-                    switch (type) {
-                        case "AcademicEvent":
-                            event = new AcademicEvent(
-                                    eventID, eventName, description, eventDate,
-                                    eventTime, eventLocation, capacity, detail);
-                            break;
-
-                        case "ClubEvent":
-                            event = new ClubEvent(
-                                    eventID, eventName, description, eventDate,
-                                    eventTime, eventLocation, capacity, detail);
-                            break;
-
-                        case "CareerEvent":
-                            event = new CareerEvent(
-                                    eventID, eventName, description, eventDate,
-                                    eventTime, eventLocation, capacity, detail);
-                            break;
-
-                        case "SocialEvent":
-                            event = new SocialEvent(
-                                    eventID, eventName, description, eventDate,
-                                    eventTime, eventLocation, capacity, detail);
-                            break;
-
-                        default:
-                            System.out.println(
-                                    "Unknown event type: " + type);
-                            continue;
-                    }
-
-                    system.getEventManager().addEvent(event);
-
-                } catch (IllegalArgumentException | DuplicateIdException e) {
-                    System.out.println(
-                            "Skipping invalid saved event.");
-                }
-            }
-
-            System.out.println("Events loaded successfully.");
-
-        } catch (IOException e) {
-            System.out.println(
-                    "Error loading events: " + e.getMessage());
-        }
-    }
-
-    public void saveAll(EventSystem system) {
-        if (system == null) {
-            return;
-        }
+    public void saveAll(
+            StudentManager studentManager,
+            OrganizerManager organizerManager,
+            RegistrationManager registrationManager) {
 
         try {
-            Files.createDirectories(FILE_PATH.getParent());
+            Files.createDirectories(DATA_FOLDER);
 
+            // Save students
             try (BufferedWriter writer = Files.newBufferedWriter(
-                    FILE_PATH, StandardCharsets.UTF_8)) {
+                    STUDENTS_FILE, StandardCharsets.UTF_8)) {
 
-                for (Event event : system.getEventManager().getAllEvents()) {
-                    String type = event.getClass().getSimpleName();
-
-                    String line =
-                            encode(type) + "|" +
-                            encode(event.getEventId()) + "|" +
-                            encode(event.getEventName()) + "|" +
-                            encode(event.getDescription()) + "|" +
-                            encode(event.getDate()) + "|" +
-                            encode(event.getTime()) + "|" +
-                            encode(event.getLocation()) + "|" +
-                            encode(String.valueOf(event.getCapacity())) + "|" +
-                            encode(getSpecificDetail(event));
-
-                    writer.write(line);
+                for (Student student : studentManager.getStudents()) {
+                    writer.write(
+                            encode(student.getStudentId()) + "|" +
+                            encode(student.getName()) + "|" +
+                            encode(student.getEmail()));
                     writer.newLine();
                 }
             }
 
-            System.out.println("Events saved successfully.");
+            // Save organizers
+            try (BufferedWriter writer = Files.newBufferedWriter(
+                    ORGANIZERS_FILE, StandardCharsets.UTF_8)) {
+
+                for (Organizer organizer : organizerManager.getOrganizers()) {
+                    writer.write(
+                            encode(organizer.getOrganizerId()) + "|" +
+                            encode(organizer.getName()) + "|" +
+                            encode(organizer.getEmail()) + "|" +
+                            encode(organizer.getDepartment()));
+                    writer.newLine();
+                }
+            }
+
+            // Save registrations
+            try (BufferedWriter writer = Files.newBufferedWriter(
+                    REGISTRATIONS_FILE, StandardCharsets.UTF_8)) {
+
+                for (Registration registration
+                        : registrationManager.getRegistrations()) {
+                    writer.write(
+                            encode(registration.getRegistrationId()) + "|" +
+                            encode(registration.getStudent().getStudentId()) + "|" +
+                            encode(registration.getEvent().getEventId()) + "|" +
+                            encode(registration.getRegistrationDate().toString()));
+                    writer.newLine();
+                }
+            }
+
+            System.out.println("Students, organizers, and registrations saved.");
 
         } catch (IOException e) {
-            System.out.println(
-                    "Error saving events: " + e.getMessage());
+            System.out.println("Error saving data: " + e.getMessage());
         }
     }
 
-    // The one extra field each event type adds.
-    private String getSpecificDetail(Event event) {
-        if (event instanceof AcademicEvent) {
-            return ((AcademicEvent) event).getMajor();
+    public void loadAll(
+            StudentManager studentManager,
+            OrganizerManager organizerManager,
+            EventManager eventManager,
+            RegistrationManager registrationManager) {
+
+        // Load students first, so registrations can find them.
+        if (Files.exists(STUDENTS_FILE)) {
+            try (BufferedReader reader = Files.newBufferedReader(
+                    STUDENTS_FILE, StandardCharsets.UTF_8)) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    try {
+                        String[] fields = line.split("\\|", -1);
+                        if (fields.length != 3) {
+                            continue;
+                        }
+
+                        String studentId = decode(fields[0]);
+                        if (studentManager.findStudentById(studentId) == null) {
+                            Student student = new Student(
+                                    studentId,
+                                    decode(fields[1]),
+                                    decode(fields[2]));
+                            studentManager.addStudent(student);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Skipping invalid student record.");
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Error loading students: " + e.getMessage());
+            }
         }
-        if (event instanceof ClubEvent) {
-            return ((ClubEvent) event).getClubName();
+
+        // Load organizers
+        if (Files.exists(ORGANIZERS_FILE)) {
+            try (BufferedReader reader = Files.newBufferedReader(
+                    ORGANIZERS_FILE, StandardCharsets.UTF_8)) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    try {
+                        String[] fields = line.split("\\|", -1);
+                        if (fields.length != 4) {
+                            continue;
+                        }
+
+                        String organizerId = decode(fields[0]);
+                        if (organizerManager.findOrganizerById(organizerId) == null) {
+                            Organizer organizer = new Organizer(
+                                    organizerId,
+                                    decode(fields[1]),
+                                    decode(fields[2]),
+                                    decode(fields[3]));
+                            organizerManager.addOrganizer(organizer);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Skipping invalid organizer record.");
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Error loading organizers: " + e.getMessage());
+            }
         }
-        if (event instanceof CareerEvent) {
-            return ((CareerEvent) event).getCompanyName();
+
+        // Load registrations after students and events are available.
+        if (Files.exists(REGISTRATIONS_FILE)) {
+            try (BufferedReader reader = Files.newBufferedReader(
+                    REGISTRATIONS_FILE, StandardCharsets.UTF_8)) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    try {
+                        String[] fields = line.split("\\|", -1);
+                        if (fields.length != 4) {
+                            continue;
+                        }
+
+                        String registrationId = decode(fields[0]);
+                        String studentId = decode(fields[1]);
+                        String eventId = decode(fields[2]);
+                        LocalDate registrationDate =
+                                LocalDate.parse(decode(fields[3]));
+
+                        registrationManager.registerStudent(
+                                registrationId,
+                                studentId,
+                                eventId,
+                                registrationDate);
+
+                    } catch (IllegalArgumentException
+                            | NotFoundException
+                            | DuplicateRegistrationException
+                            | EventFullException e) {
+                        System.out.println("Skipping invalid registration record.");
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println(
+                        "Error loading registrations: " + e.getMessage());
+            }
         }
-        if (event instanceof SocialEvent) {
-            return ((SocialEvent) event).getTheme();
-        }
-        return "";
+
+        System.out.println("Saved data loaded.");
     }
 
     private String encode(String value) {
-        if (value == null) {
-            value = "";
-        }
         return Base64.getEncoder().encodeToString(
                 value.getBytes(StandardCharsets.UTF_8));
     }
