@@ -1,4 +1,3 @@
-```java
 package persistence;
 
 import java.io.BufferedReader;
