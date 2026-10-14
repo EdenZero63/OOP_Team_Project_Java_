@@ -11,7 +11,7 @@ import model.SocialEvent;
 public class InputHelper {
 
     public static Event createEvent(
-            Scanner input, int eventID) {
+            Scanner input, String eventID) {
 
         System.out.println("\nChoose Event Type:");
         System.out.println("1. Academic Event");
@@ -23,7 +23,9 @@ public class InputHelper {
                 input, "Enter choice: ", "1", "2", "3", "4");
 
         String name = readRequiredText(input, "Enter event name: ");
+        String description = readRequiredText(input, "Enter event description: ");
         String date = readRequiredText(input, "Enter event date: ");
+        String time = readRequiredText(input, "Enter event time: ");
         String location = readRequiredText(input, "Enter event location: ");
         int capacity = readPositiveInt(input, "Enter event capacity: ");
 
@@ -33,28 +35,32 @@ public class InputHelper {
                         input, "Enter major or academic subject: ");
 
                 return new AcademicEvent(
-                        eventID, name, date, location, capacity, major);
+                        eventID, name, description, date, time,
+                        location, capacity, major);
 
             case "2":
                 String clubName = readRequiredText(
                         input, "Enter club name: ");
 
                 return new ClubEvent(
-                        eventID, name, date, location, capacity, clubName);
+                        eventID, name, description, date, time,
+                        location, capacity, clubName);
 
             case "3":
                 String companyName = readRequiredText(
                         input, "Enter company name: ");
 
                 return new CareerEvent(
-                        eventID, name, date, location, capacity, companyName);
+                        eventID, name, description, date, time,
+                        location, capacity, companyName);
 
             case "4":
-                String description = readRequiredText(
-                        input, "Enter event description: ");
+                String theme = readRequiredText(
+                        input, "Enter event theme: ");
 
                 return new SocialEvent(
-                        eventID, name, date, location, capacity, description);
+                        eventID, name, description, date, time,
+                        location, capacity, theme);
 
             default:
                 return null;
