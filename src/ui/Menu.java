@@ -282,100 +282,91 @@ public class Menu{
 
     public void  registerForEventsMenu()
     {
-
-        boolean flag = false;
-        Scanner input = new Scanner(System.in);
-
         System.out.println("Enter student ID");
-        String studentID = input.nextLine();
+        String currentStudentID = input.nextLine().trim();
+        System.out.println("Enter Event ID ");
+        String currentEventID = input.nextLine().trim();
 
-        System.out.println("Are you [STUDENT NAME]?(Y/N)");
-        Student currentStudent =  studentManage.findStudentById(studentID);
-
-        char confirm = input.next().charAt(0);
-        do{
-            if(confirm == 'Y' || confirm == 'y')
-            {
-                System.out.println("Enter the ID for the Event you'd like to register for");
-                String eventID = input.nextLine();
-
-                System.out.println("REGISTERED FOR EVENT");
-            }
-        System.out.println("Do you wish to exit menu?(Y/N)");
-        confirm = input.next().charAt(0);
-            if(confirm == 'Y'|| confirm == 'y')
-            {
-
-             flag =true;
-
-            }
-    }while(flag!= true);
+        try{
+              Registration registration =   regManager.registerStudent(currentStudentID+ "-"+ currentEventID,currentStudentID, currentEventID);
+              System.out.println("Registration succesful!");
+              System.out.println("Student: "+ registration.getStudent().getName());
+              System.out.println("Event: "+registration.getEvent().getEventName());
+        }catch(NotFoundException | DuplicateRegistrationException| EventFullException e){
+            System.out.println(e.getMessage());
+        }
+      
     }
+    
 
     public void  cancelRegistrationMenu()
         {
-            boolean flag = false;
-            Scanner input = new Scanner(System.in);
+           
+            System.out.println("CANCEL REGISTRATION MENU");
+            System.out.println("Enter Student ID");
+            String currentStudentID = input.nextLine();
 
-            System.out.println("Enter student ID");
-            String studentID = input.nextLine();
-
-            System.out.println("Are you [STUDENT NAME]?(Y/N)");
-            char confirm = input.next().charAt(0);
-        do{
-            if(confirm == 'Y' || confirm == 'y')
-            {
-                System.out.println("LIST EVENTS REGISTERED FOR");
-                System.out.println("Enter name of Event you'd like to cancel: ");
-                String eventName = input.nextLine(); 
-
-                System.out.println("REMOVED FROM EVENT");
-
+            System.out.println("Enter event ID:  ");
+            String currentEventID =input.nextLine().trim();
+            try{
+                regManager.cancelRegistration(currentStudentID,currentEventID);
+                System.out.println("Event Cancelled Successfully");
+            }  catch(NotFoundException e){
+                System.out.println(e.getMessage());
             }
-            System.out.println("Do you wish to exit menu?(Y/N)");
-
-            confirm = input.next().charAt(0);
-            if(confirm == 'Y'|| confirm == 'y')
-            {
-                flag = true;
-            }
-
-
-         }while(flag!= true);
         }
 
     public void  viewSutdentRegsMenu()
     {
-        boolean flag = false;
-        Scanner input = new Scanner(System.in);
+       System.out.println("VIEW STUDENT REGISTRATION MENU");
+    
+       System.out.println("Enter Student ID: ");
+       String currentStudentID= input.nextLine().trim();
 
-        System.out.println("Enter Event Id: ");
-        String eventID = input.nextLine();
-
-        System.out.println("Are you looking for [Event Name]?(Y/N)");
-        char confirm = input.next().charAt(0);
-        do{
-        if(Character.toUpperCase(confirm) == 'Y')
-        {
-            System.out.println("LIST EVENT ATTENDES");
-
-            }
-
-            System.out.println("Do you wish to exit menu?(Y/N)");
-
-            confirm = input.next().charAt(0);
-            if(confirm == 'Y'|| confirm == 'y')
+       try{
+            ArrayList<Event> events = regManager.getEventsForStudent(currentStudentID);
+            System.out.println("Student: "+ studentManage.findStudentById(currentStudentID).getName());
+            System.out.println();
+            System.out.println("Registered Events: ");
+            if(events.isEmpty())
             {
-                flag = true;   
+                System.out.println("NONE");
             }
-
-
-        }while(flag!= true);
+            else{
+                for(int count =0; count< events.size(); count++)
+                {
+                    System.out.println((count+1)+". "+events.get(count).getEventName() + " ID: "+events.get(count).getEventId());
+                }
+            }
+       }catch(NotFoundException e){
+        System.out.println(e.getMessage());
+       }
+      
     }
     public void viewEventAttendsMenu(){
-        Scanner input = new Scanner(System.in);
-
+        
         System.out.println("Enter Event ID: ");
+        String currentEventID = input.nextLine().trim();
+
+        try{
+            ArrayList<Student> students = regManager.getStudentsForEvent(currentEventID);
+            System.out.println("Events: "+ eventMang.findEventById(currentEventID).getEventName());
+            System.out.println();
+            System.out.println("Attending Event: ");
+            if(students.isEmpty())
+            {
+                System.out.println("NONE")
+            }
+            else{
+                for(int count =0; count<students.size(); count++)
+                {
+                    System.out.println((count+1)+ ". "+ students.get(count).getName());
+                }
+            }
+
+        }catch(NotFoundException e){
+            System.out.println(e.getMessage());
+        }
         
     }
     public void  viewOrganizersMenu()
@@ -445,5 +436,6 @@ public class Menu{
                 System.out.println("Invalid report choice.");
                 }
     }
+}
 
 
