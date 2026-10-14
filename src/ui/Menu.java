@@ -25,6 +25,9 @@ public class Menu{
      public void run(){
         String choice;
          do{
+            System.out.println("\\033[H\\033[2J");
+            System.out.flush();
+        
              System.out.println();
              System.out.println("=================================");
              System.out.println("CAMPUS EVENT MANAGEMENT SYSTEM");
@@ -94,9 +97,9 @@ public class Menu{
 
 //Student Add menu 
     public  void studentAddMenu(){
-        Scanner input = new Scanner(System.in);
         System.out.println("\\033[H\\033[2J");
         System.out.flush();
+        System.out.println("ADD STUDENT MENU");
         System.out.println("Enter name of student: ");
         String studentName = input.nextLine();
 
@@ -116,16 +119,19 @@ public class Menu{
 
     public void viewStudentMenu()
     {
-        Scanner input = new Scanner(System.in);
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("VIEW STUDENT MENU");
+         input = new Scanner(System.in);
 
         System.out.println("Enter ID of student: ");
         String studentID = input.nextLine();
-        studentManage.findStudentById(studentID);
+        studentManage.displayStudentById(studentID);
 
         return;
     }
+
     public void createOrganizerMenu(){
-        Scanner input= new Scanner(System.in);
         String orgID= "";
         String orgName= "";
         String email = "";
@@ -139,7 +145,7 @@ public class Menu{
         char choice = input.next().charAt(0);
         if(choice =='Y'|| choice == 'y')
         {
-        System.out.println("Enter Organizer ID: ");
+         System.out.println("Enter Organizer ID: ");
             orgID = input.nextLine();
         System.out.println("Enter orgName: ");
         orgName = input.nextLine();
@@ -164,6 +170,10 @@ public class Menu{
  
     //asks details and builds event type
     public void createEventMenu(){
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+    
+        
         System.out.println("CREATE EVENT");
         System.out.println("1. Academic Event");
         System.out.println("2. Club Event");
@@ -246,6 +256,9 @@ public class Menu{
 
 
      public void viewEventsMenu(){
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("VIEW EVENTS MENU");
         System.out.print("Enter event ID (or press Enter to see all): ");
         String eventID = input.nextLine().trim();
         if(eventID.isEmpty()){
@@ -263,6 +276,9 @@ public class Menu{
      
     //search by part of name
     public void searchEventsMenu(){
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("SEARCH EVENTS MENU");
         System.out.print("Enter part of the event name: ");
         String keyword = input.nextLine();
         ArrayList<Event> results = eventMang.searchEventsByName(keyword);
@@ -282,6 +298,9 @@ public class Menu{
 
     public void  registerForEventsMenu()
     {
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("REGISTER FOR EVENTS MENU");
         System.out.println("Enter student ID");
         String currentStudentID = input.nextLine().trim();
         System.out.println("Enter Event ID ");
@@ -301,6 +320,8 @@ public class Menu{
 
     public void  cancelRegistrationMenu()
         {
+            System.out.println("\\033[H\\033[2J");
+            System.out.flush();
            
             System.out.println("CANCEL REGISTRATION MENU");
             System.out.println("Enter Student ID");
@@ -318,6 +339,9 @@ public class Menu{
 
     public void  viewSutdentRegsMenu()
     {
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        
        System.out.println("VIEW STUDENT REGISTRATION MENU");
     
        System.out.println("Enter Student ID: ");
@@ -344,7 +368,10 @@ public class Menu{
       
     }
     public void viewEventAttendsMenu(){
-        
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("VIEW EVENT ATTENDANTS MENU");
+
         System.out.println("Enter Event ID: ");
         String currentEventID = input.nextLine().trim();
 
@@ -371,6 +398,9 @@ public class Menu{
     }
     public void  viewOrganizersMenu()
     {
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("VIEW ORGANIZER MENU");
         boolean flag = false;
         Scanner input = new Scanner(System.in);
         
@@ -398,6 +428,9 @@ public class Menu{
 
     //reports submenu
     public void systemsReportMenu(){
+        System.out.println("\\033[H\\033[2J");
+        System.out.flush();
+        System.out.println("SYSTEM REPORT MENU MENU");
         ReportGenerator reports = new ReportGenerator();
         ArrayList<Event> events = eventMang.getAllEvents();
         ArrayList<Registration> registrations = regManager.getRegistrations();
