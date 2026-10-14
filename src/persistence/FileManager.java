@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
 
+import exception.DuplicateIdException;
 import model.Event;
 import model.AcademicEvent;
 import model.ClubEvent;
@@ -39,22 +40,24 @@ public class FileManager {
                 try {
                     String[] data = line.split("\\|", -1);
 
-                    if (data.length != 7) {
+                    if (data.length != 9) {
                         System.out.println(
                                 "Skipping invalid event record.");
                         continue;
                     }
 
                     String type = decode(data[0]);
-                    int eventID = Integer.parseInt(decode(data[1]));
+                    String eventID = decode(data[1]);
                     String eventName = decode(data[2]);
-                    String eventDate = decode(data[3]);
-                    String eventLocation = decode(data[4]);
-                    int capacity = Integer.parseInt(decode(data[5]));
-                    String detail = decode(data[6]);
+                    String description = decode(data[3]);
+                    String eventDate = decode(data[4]);
+                    String eventTime = decode(data[5]);
+                    String eventLocation = decode(data[6]);
+                    int capacity = Integer.parseInt(decode(data[7]));
+                    String detail = decode(data[8]);
 
                     // Skip events that are already loaded.
-                    if (system.findEventById(eventID) != null) {
+                    if (system.getEventManager().findEventById(eventID) != null) {
                         continue;
                     }
 
@@ -63,26 +66,26 @@ public class FileManager {
                     switch (type) {
                         case "AcademicEvent":
                             event = new AcademicEvent(
-                                    eventID, eventName, eventDate,
-                                    eventLocation, capacity, detail);
+                                    eventID, eventName, description, eventDate,
+                                    eventTime, eventLocation, capacity, detail);
                             break;
 
                         case "ClubEvent":
                             event = new ClubEvent(
-                                    eventID, eventName, eventDate,
-                                    eventLocation, capacity, detail);
+                                    eventID, eventName, description, eventDate,
+                                    eventTime, eventLocation, capacity, detail);
                             break;
 
                         case "CareerEvent":
                             event = new CareerEvent(
-                                    eventID, eventName, eventDate,
-                                    eventLocation, capacity, detail);
+                                    eventID, eventName, description, eventDate,
+                                    eventTime, eventLocation, capacity, detail);
                             break;
 
                         case "SocialEvent":
                             event = new SocialEvent(
-                                    eventID, eventName, eventDate,
-                                    eventLocation, capacity, detail);
+                                    eventID, eventName, description, eventDate,
+                                    eventTime, eventLocation, capacity, detail);
                             break;
 
                         default:
@@ -91,9 +94,9 @@ public class FileManager {
                             continue;
                     }
 
-                    system.addEvent(event);
+                    system.getEventManager().addEvent(event);
 
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException | DuplicateIdException e) {
                     System.out.println(
                             "Skipping invalid saved event.");
                 }
@@ -118,17 +121,19 @@ public class FileManager {
             try (BufferedWriter writer = Files.newBufferedWriter(
                     FILE_PATH, StandardCharsets.UTF_8)) {
 
-                for (Event event : system.getEvents()) {
+                for (Event event : system.getEventManager().getAllEvents()) {
                     String type = event.getClass().getSimpleName();
 
                     String line =
                             encode(type) + "|" +
-                            encode(String.valueOf(event.getEventID())) + "|" +
+                            encode(event.getEventId()) + "|" +
                             encode(event.getEventName()) + "|" +
-                            encode(event.getEventDate()) + "|" +
-                            encode(event.getEventLocation()) + "|" +
+                            encode(event.getDescription()) + "|" +
+                            encode(event.getDate()) + "|" +
+                            encode(event.getTime()) + "|" +
+                            encode(event.getLocation()) + "|" +
                             encode(String.valueOf(event.getCapacity())) + "|" +
-                            encode(event.getSpecificDetail());
+                            encode(getSpecificDetail(event));
 
                     writer.write(line);
                     writer.newLine();
@@ -143,7 +148,27 @@ public class FileManager {
         }
     }
 
+    // The one extra field each event type adds.
+    private String getSpecificDetail(Event event) {
+        if (event instanceof AcademicEvent) {
+            return ((AcademicEvent) event).getMajor();
+        }
+        if (event instanceof ClubEvent) {
+            return ((ClubEvent) event).getClubName();
+        }
+        if (event instanceof CareerEvent) {
+            return ((CareerEvent) event).getCompanyName();
+        }
+        if (event instanceof SocialEvent) {
+            return ((SocialEvent) event).getTheme();
+        }
+        return "";
+    }
+
     private String encode(String value) {
+        if (value == null) {
+            value = "";
+        }
         return Base64.getEncoder().encodeToString(
                 value.getBytes(StandardCharsets.UTF_8));
     }
