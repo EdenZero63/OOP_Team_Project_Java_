@@ -11,7 +11,7 @@ public class EventSystem{
         this.studentManager = new StudentManager();
         this.organizerManager = new OrganizerManager();
         this.eventManager = new EventManager();
-        this.registrationManager = new RegistrationManager();
+        this.registrationManager = new RegistrationManager(studentManager, eventManager);
     }
 
     //getters
