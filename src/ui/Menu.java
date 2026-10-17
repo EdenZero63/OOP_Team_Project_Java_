@@ -112,16 +112,16 @@ public class Menu{
     public  void studentAddMenu(){
         clearScreen();
         System.out.println("ADD STUDENT MENU");
-        System.out.println("Enter name of student: ");
+        System.out.print("Enter name of student: ");
         String studentName = input.nextLine();
 
-        System.out.println("Enter Students ID: ");
+        System.out.print("Enter Students ID: ");
         String studentID = input.nextLine();
 
-        System.out.println("Enter Student email: ");
+        System.out.print("Enter Student email: ");
         String studentEmail = input.nextLine();
 
-        System.out.println("Enter Student major: ");
+        System.out.print("Enter Student major: ");
         String studentMajor = input.nextLine();
         try{
             Student student= new Student(studentID, studentName,studentEmail, studentMajor);
@@ -159,17 +159,17 @@ public class Menu{
         clearScreen();
         System.out.println("ORGANIZER CREATE MENU");
 
-        System.out.println("Do you wish to create an Organizer?(Y/N): ");
+        System.out.print("Do you wish to create an Organizer?(Y/N): ");
         String choice = input.nextLine().trim();
         if(choice.equalsIgnoreCase("Y"))
         {
-         System.out.println("Enter Organizer ID: ");
+         System.out.print("Enter Organizer ID: ");
             orgID = input.nextLine();
-        System.out.println("Enter orgName: ");
+        System.out.print("Enter orgName: ");
         orgName = input.nextLine();
-        System.out.println("Enter email: ");
+        System.out.print("Enter email: ");
         email = input.nextLine();
-        System.out.println("Enter Department: ");
+        System.out.print("Enter Department: ");
         department= input.nextLine();
       try{
             Organizer newOrganizer = new Organizer(orgID, orgName, email, department);
@@ -314,9 +314,9 @@ public class Menu{
     {
         clearScreen();
         System.out.println("REGISTER FOR EVENTS MENU");
-        System.out.println("Enter student ID: ");
+        System.out.print("Enter student ID: ");
         String currentStudentID = input.nextLine().trim();
-        System.out.println("Enter event ID: ");
+        System.out.print("Enter event ID: ");
         String currentEventID = input.nextLine().trim();
 
         try{
@@ -336,10 +336,10 @@ public class Menu{
             clearScreen();
            
             System.out.println("CANCEL REGISTRATION MENU");
-            System.out.println("Enter student ID: ");
+            System.out.print("Enter student ID: ");
             String currentStudentID = input.nextLine().trim();
 
-            System.out.println("Enter event ID: ");
+            System.out.print("Enter event ID: ");
             String currentEventID =input.nextLine().trim();
             try{
                 regManager.cancelRegistration(currentStudentID,currentEventID);
@@ -355,7 +355,7 @@ public class Menu{
         
        System.out.println("VIEW STUDENT REGISTRATION MENU");
     
-       System.out.println("Enter Student ID: ");
+       System.out.print("Enter Student ID: ");
        String currentStudentID= input.nextLine().trim();
 
        try{
@@ -382,7 +382,7 @@ public class Menu{
         clearScreen();
         System.out.println("VIEW EVENT ATTENDEES MENU");
 
-        System.out.println("Enter Event ID: ");
+        System.out.print("Enter Event ID: ");
         String currentEventID = input.nextLine().trim();
 
         try{
